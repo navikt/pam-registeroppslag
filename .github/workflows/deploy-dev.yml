@@ -1,0 +1,27 @@
+name: build-deploy-dev
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
+      - "LICENCE"
+      - "CODEOWNERS"
+    branches:
+      - main
+      - feature/**
+jobs:
+  call-workflow:
+    uses: navikt/pam-deploy/.github/workflows/deploy-dev.yml@v7
+    permissions:
+      actions: read
+      contents: write
+      security-events: write
+      id-token: write
+    with:
+      JAVA_VERSION: 21
+      BUILD_CACHE: gradle
+      NAIS_RESOURCE: naiserator.yml
+      CODEQL_ENABLED: true
+      SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'main' }}
+    secrets:
+      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}

@@ -1,0 +1,53 @@
+apiVersion: "monitoring.coreos.com/v1"
+kind: "PrometheusRule"
+metadata:
+  name: "pam-registeroppslag-alerts"
+  namespace: "teampam"
+  labels:
+    team: "teampam"
+spec:
+  groups:
+    - name: "teampam pam-registeroppslag alerts"
+      rules:
+        - alert: "pam-registeroppslag er nede"
+          expr: kube_deployment_status_replicas_available{deployment="pam-registeroppslag"} == 0
+          for: 2m
+          annotations:
+            consequence: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
+            action: "kubectl describe pod {{ $labels.deployment }} -n {{ $labels.namespace }}` for events, og `kubectl logs {{ $labels.deployment }} -n {{ $labels.namespace }}` for logger"
+          labels:
+            namespace: "teampam"
+            severity: critical
+        - alert: "pam-registeroppslag restarter ofte"
+          expr: sum(increase(kube_pod_container_status_restarts_total{container="pam-registeroppslag"}[15m])) by (container) > 2
+          for: 5m
+          annotations:
+            consequence: "App {{ $labels.container }} restarter ofte"
+            action: "kubectl describe pod {{ $labels.deployment }} -n {{ $labels.namespace }}` for events, og `kubectl logs {{ $labels.deployment }} -n {{ $labels.namespace }}` for logger"
+          labels:
+            namespace: "teampam"
+            severity: critical
+        - alert: "pam-registeroppslag - Leder jobb for prosessering av oppfølgingsMessages har ikke kjørt de siste 30 minuttene"
+          expr: sum(increase(oppfolging_processor_job_counter_total[30m])) == 0
+          for: 5m
+          annotations:
+            action: "Sjekk opp at leader er definert"
+          labels:
+            namespace: "teampam"
+            severity: critical
+        - alert: "pam-registeroppslag - Leder jobb for prosessering av cvOutboxMessages har ikke kjørt de siste 30 minuttene"
+          expr: sum(increase(cv_processor_job_counter_total[30m])) == 0
+          for: 5m
+          annotations:
+            action: "Sjekk opp at leader er definert"
+          labels:
+            namespace: "teampam"
+            severity: critical
+        - alert: "pam-registeroppslag - Leder jobb for prosessering av samtykkeMessages har ikke kjørt de siste 30 minuttene"
+          expr: sum(increase(samtykke_processor_job_counter_total[30m])) == 0
+          for: 5m
+          annotations:
+            action: "Sjekk opp at leader er definert"
+          labels:
+            namespace: "teampam"
+            severity: critical
