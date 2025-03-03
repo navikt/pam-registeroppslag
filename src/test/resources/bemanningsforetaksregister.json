@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "versjon": "2.2",
+    "datoTidGenerert": "2025-02-24T07:07:12.2930356Z"
+  },
+  "registernavn": "bemanningsforetaksregisteret",
+  "data": [
+    {
+      "organisasjonsnummer": "111111111",
+      "overordnetEnhet": null,
+      "navn": "KRISTOFFERSENS BODY GUARDS AS",
+      "antallAnsatte": 8,
+      "registerstatusTekst": "Godkjent",
+      "registerstatus": 1,
+      "godkjenningsstatus": "Godkjent",
+      "organisasjonsform": {
+        "kode": "AS",
+        "beskrivelse": "Aksjeselskap"
+      },
+      "naeringskoder": [
+        {
+          "kode": "62.020",
+          "beskrivelse": "Konsulentvirksomhet tilknyttet informasjonsteknologi"
+        }
+      ],
+      "institusjonellSektorkode": {
+        "kode": "2100",
+        "beskrivelse": "Private aksjeselskaper mv."
+      },
+      "hjemmeside": "www.example.com",
+      "postadresse": {
+        "gateadresse": [],
+        "postnummer": "",
+        "poststed": "",
+        "kommune": "",
+        "kommunenummer": "",
+        "fylke": "",
+        "fylkesnummer": "",
+        "land": "",
+        "landkode": ""
+      },
+      "forretningsadresse": {
+        "gateadresse": [
+          "Slottsplassen 1"
+        ],
+        "postnummer": "0010",
+        "poststed": "OSLO",
+        "kommune": "OSLO",
+        "kommunenummer": "0301",
+        "fylke": "OSLO",
+        "fylkesnummer": "03",
+        "land": "Norge",
+        "landkode": "NO"
+      },
+      "registreringsdatoEnhetsregisteret": "1969-08-11",
+      "underenheter": [
+        {
+          "organisasjonsnummer": "222222222",
+          "overordnetEnhet": "111111111",
+          "navn": "KRISTOFFERSENS BODY GUARDS Avd. OSLO",
+          "antallAnsatte": 8,
+          "registerstatusTekst": "Ikke Godkjent",
+          "registerstatus": 2,
+          "godkjenningsstatus": "Ikke Godkjent",
+          "organisasjonsform": {
+            "kode": "BEDR",
+            "beskrivelse": "Underenhet til næringsdrivende og offentlig forvaltning"
+          },
+          "naeringskoder": [
+            {
+              "kode": "62.020",
+              "beskrivelse": "Konsulentvirksomhet tilknyttet informasjonsteknologi"
+            }
+          ],
+          "institusjonellSektorkode": null,
+          "hjemmeside": null,
+          "postadresse": {
+            "gateadresse": [],
+            "postnummer": "",
+            "poststed": "",
+            "kommune": "",
+            "kommunenummer": "",
+            "fylke": "",
+            "fylkesnummer": "",
+            "land": "",
+            "landkode": ""
+          },
+          "forretningsadresse": {
+            "gateadresse": [
+              "Slottsplassen 1"
+            ],
+            "postnummer": "0010",
+            "poststed": "OSLO",
+            "kommune": "OSLO",
+            "kommunenummer": "0301",
+            "fylke": "OSLO",
+            "fylkesnummer": "03",
+            "land": "Norge",
+            "landkode": "NO"
+          },
+          "registreringsdatoEnhetsregisteret": "1969-08-11",
+          "underenheter": []
+        }
+      ]
+    }
+  ]
+}

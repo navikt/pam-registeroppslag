@@ -5,6 +5,7 @@ import io.javalin.http.Context
 import io.javalin.json.JavalinJackson
 import io.javalin.micrometer.MicrometerPlugin
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
+import java.util.*
 import net.logstash.logback.argument.StructuredArguments.kv
 import no.nav.arbeid.registeroppslag.config.hentKonsumentId
 import no.nav.arbeid.registeroppslag.sikkerhet.ForbiddenException
@@ -14,7 +15,6 @@ import no.nav.arbeid.registeroppslag.sikkerhet.UnauthorizedException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
-import java.util.*
 
 fun main() {
     val env = System.getenv()
@@ -36,11 +36,14 @@ fun ApplicationContext.startApp(): Javalin {
 
     setupAllRoutes(javalin)
 
+    scheduler.start()
+
     return javalin
 }
 
 private fun ApplicationContext.setupAllRoutes(javalin: Javalin) {
     naisController.setupRoutes(javalin)
+    bemanningsforetakController.setupRoutes(javalin)
 }
 
 fun startJavalin(
@@ -84,19 +87,19 @@ fun startJavalin(
         MDC.remove("U")
         MDC.remove(KONSUMENT_ID_MDC_KEY)
     }.exception(NotFoundException::class.java) { e, ctx ->
-        log.info("NotFoundException: ${e.message}", e)
+        log.warn("NotFoundException: ${e.message}", e)
         ctx.status(404).result(e.message ?: "")
     }.exception(ForbiddenException::class.java) { e, ctx ->
-        log.info("ForbiddenException: ${e.message}", e)
+        log.warn("ForbiddenException: ${e.message}", e)
         ctx.status(403).result(e.message ?: "")
     }.exception(UnauthorizedException::class.java) { e, ctx ->
-        log.info("UnauthorizedException: ${e.message}", e)
+        log.warn("UnauthorizedException: ${e.message}", e)
         ctx.status(401).result(e.message ?: "")
     }.exception(IllegalArgumentException::class.java) { e, ctx ->
-        log.info("IllegalArgumentException: ${e.message}", e)
+        log.warn("IllegalArgumentException: ${e.message}", e)
         ctx.status(400).result(e.message ?: "")
     }.exception(Exception::class.java) { e, ctx ->
-        log.info("Exception: ${e.message}", e)
+        log.error("Exception: ${e.message}", e)
         ctx.status(500).result(e.message ?: "")
     }.start(port)
 }

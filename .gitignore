@@ -34,3 +34,6 @@ build
 
 # Ignore MacOS directory attributes
 .DS_Store
+
+# Ignorer nedlastede registre
+src/main/resources/register/*

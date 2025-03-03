@@ -4,12 +4,25 @@ import no.nav.arbeid.registeroppslag.ApplicationContext
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.testcontainers.containers.GenericContainer
+import org.testcontainers.containers.wait.strategy.Wait
+import org.testcontainers.utility.DockerImageName
 
 /*
  * Application context som kan brukes i tester, denne inkluderer en egen mock-oauth2-server
  */
 class TestApplicationContext(
     private val localEnv: MutableMap<String, String>,
+    val localValKey: GenericContainer<*> = GenericContainer(DockerImageName.parse("valkey/valkey:8.1"))
+        .waitingFor(Wait.forListeningPort())
+        .apply {
+            withExposedPorts(6379)
+            start()
+        }
+        .also { localConfig ->
+            localEnv["VALKEY_HOST"] = localConfig.host
+            localEnv["VALKEY_PORT"] = localConfig.getMappedPort(6379).toString()
+        }
 ) : ApplicationContext(localEnv) {
 
     private val log: Logger = LoggerFactory.getLogger("LocalApplicationContext")

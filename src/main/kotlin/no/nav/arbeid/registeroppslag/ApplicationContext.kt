@@ -13,9 +13,15 @@ import io.micrometer.core.instrument.binder.system.ProcessorMetrics
 import io.micrometer.core.instrument.binder.system.UptimeMetrics
 import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
+import kotlinx.coroutines.runBlocking
+import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakController
+import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakParser
+import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakService
 import no.nav.arbeid.registeroppslag.config.TokenConfig
 import no.nav.arbeid.registeroppslag.nais.HealthService
 import no.nav.arbeid.registeroppslag.nais.NaisController
+import no.nav.arbeid.registeroppslag.scheduler.Scheduler
+import no.nav.arbeid.registeroppslag.valkey.opprettValkeyKlient
 import java.net.http.HttpClient
 import java.util.*
 
@@ -48,5 +54,23 @@ open class ApplicationContext(envInn: Map<String, String>) {
 
     val healthService = HealthService()
 
+    val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
+        bemanningsforetakService.lastNedOgLagreRegister()
+    }
+    val valkey = runBlocking {
+        opprettValkeyKlient(env.getValue("VALKEY_HOST"), env.getValue("VALKEY_PORT").toInt())
+    }
+    val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
+    val bemanningsforetakService =
+        BemanningsforetakService(
+            bemanningsforetakParser,
+            httpClient,
+            valkey,
+            objectMapper,
+            env.getValue("BEMANNINGSFORETAKSREGISTER_URL")
+        )
+
     val naisController = NaisController(healthService, prometheusRegistry)
+    val bemanningsforetakController = BemanningsforetakController(bemanningsforetakService)
+
 }
