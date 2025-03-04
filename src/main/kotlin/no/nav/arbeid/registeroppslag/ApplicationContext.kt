@@ -58,7 +58,10 @@ open class ApplicationContext(envInn: Map<String, String>) {
         bemanningsforetakService.lastNedOgLagreRegister()
     }
     val valkey = runBlocking {
-        opprettValkeyKlient(env.getValue("VALKEY_HOST"), env.getValue("VALKEY_PORT").toInt())
+        opprettValkeyKlient(
+            env.getValue("VALKEY_HOST_REGISTEROPPSLAG"),
+            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt()
+        )
     }
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
     val bemanningsforetakService =
