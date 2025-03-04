@@ -61,7 +61,8 @@ open class ApplicationContext(envInn: Map<String, String>) {
     val valkey = runBlocking {
         opprettValkeyKlient(
             env.getValue("VALKEY_HOST_REGISTEROPPSLAG"),
-            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt()
+            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt(),
+            env.getValue("VALKEY_USE_TLS").toBoolean()
         )
     }
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)

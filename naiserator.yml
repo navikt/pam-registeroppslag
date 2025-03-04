@@ -57,6 +57,8 @@ spec:
     - instance: registeroppslag
       access: readwrite
   env:
+    - name: VALKEY_USE_TLS
+      value: "true"
     - name: BEMANNINGSFORETAKSREGISTER_URL
       value: "https://data.arbeidstilsynet.no/bemanningsforetaksregisteret2/api/virksomheter"
 
