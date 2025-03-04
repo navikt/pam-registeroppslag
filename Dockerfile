@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/java21-debian12
+FROM ghcr.io/navikt/baseimages/temurin:21
 
 COPY build/libs/pam-registeroppslag-all.jar ./app.jar
 EXPOSE 8080
