@@ -58,13 +58,7 @@ open class ApplicationContext(envInn: Map<String, String>) {
     val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
         bemanningsforetakService.lastNedOgLagreRegister()
     }
-    val valkey = runBlocking {
-        opprettValkeyKlient(
-            env.getValue("VALKEY_HOST_REGISTEROPPSLAG"),
-            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt(),
-            env.getValue("VALKEY_USE_TLS").toBoolean()
-        )
-    }
+    val valkey = runBlocking { opprettValkeyKlient(env) }
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
     val bemanningsforetakService =
         BemanningsforetakService(

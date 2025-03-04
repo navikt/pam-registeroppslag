@@ -19,6 +19,8 @@ class LocalApplicationContext(
         .also { localConfig ->
             localEnv["VALKEY_HOST_REGISTEROPPSLAG"] = localConfig.host
             localEnv["VALKEY_PORT_REGISTEROPPSLAG"] = localConfig.getMappedPort(6379).toString()
+            localEnv["VALKEY_USERNAME_REGISTEROPPSLAG"] = ""
+            localEnv["VALKEY_PASSWORD_REGISTEROPPSLAG"] = ""
             localEnv["VALKEY_USE_TLS"] = false.toString()
         }
 ) : ApplicationContext(localEnv)
