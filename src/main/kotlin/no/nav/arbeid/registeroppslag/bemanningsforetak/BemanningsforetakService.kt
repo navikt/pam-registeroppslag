@@ -1,7 +1,7 @@
 package no.nav.arbeid.registeroppslag.bemanningsforetak
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import glide.api.GlideClient
+import glide.api.BaseClient
 import kotlinx.coroutines.future.await
 import kotlinx.coroutines.runBlocking
 import no.nav.arbeid.registeroppslag.Organisasjonsnummer
@@ -14,7 +14,7 @@ import java.net.http.HttpClient
 class BemanningsforetakService(
     private val parser: BemanningsforetakParser,
     private val httpClient: HttpClient,
-    private val valkey: GlideClient,
+    private val valkey: BaseClient,
     private val objectMapper: ObjectMapper,
     private val bemanningsforetakRegisterUrl: String,
 ) {
