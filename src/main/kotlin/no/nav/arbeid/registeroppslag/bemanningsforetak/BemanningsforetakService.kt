@@ -14,7 +14,7 @@ import java.net.http.HttpClient
 class BemanningsforetakService(
     private val parser: BemanningsforetakParser,
     private val httpClient: HttpClient,
-    private val valkey: BaseClient,
+//    private val valkey: BaseClient,
     private val objectMapper: ObjectMapper,
     private val bemanningsforetakRegisterUrl: String,
 ) {
@@ -22,34 +22,34 @@ class BemanningsforetakService(
         val log: Logger = LoggerFactory.getLogger(BemanningsforetakService::class.java)
     }
 
-    fun hentBemanningsforetak(organisasjonsnummer: Organisasjonsnummer): BemanningsforetakDTO {
-        val resonseValue = runBlocking { valkey.get("${organisasjonsnummer}:bemanningsforetaksregisteret").await() }
-        val bemanningsforetak = resonseValue?.let { objectMapper.readValue(it, BemanningsforetakDTO::class.java) }
-            ?: BemanningsforetakDTO.ikkeRegistrert()
-        log.info("Henter bemanningsforetak $bemanningsforetak")
-        return bemanningsforetak
-    }
+//    fun hentBemanningsforetak(organisasjonsnummer: Organisasjonsnummer): BemanningsforetakDTO {
+//        val resonseValue = runBlocking { valkey.get("${organisasjonsnummer}:bemanningsforetaksregisteret").await() }
+//        val bemanningsforetak = resonseValue?.let { objectMapper.readValue(it, BemanningsforetakDTO::class.java) }
+//            ?: BemanningsforetakDTO.ikkeRegistrert()
+//        log.info("Henter bemanningsforetak $bemanningsforetak")
+//        return bemanningsforetak
+//    }
 
-    fun hentBemanningsforetakStatus(organisasjonsnummer: Organisasjonsnummer): RegisterstatusDTO {
-        val bemanningsforetak = hentBemanningsforetak(organisasjonsnummer)
-        return RegisterstatusDTO(
-            registernavn = bemanningsforetak.registernavn,
-            statusTekst = bemanningsforetak.godkjenningsstatus,
-            status = bemanningsforetak.registerstatus,
-        )
-    }
+//    fun hentBemanningsforetakStatus(organisasjonsnummer: Organisasjonsnummer): RegisterstatusDTO {
+//        val bemanningsforetak = hentBemanningsforetak(organisasjonsnummer)
+//        return RegisterstatusDTO(
+//            registernavn = bemanningsforetak.registernavn,
+//            statusTekst = bemanningsforetak.godkjenningsstatus,
+//            status = bemanningsforetak.registerstatus,
+//        )
+//    }
 
-    fun lastNedOgLagreRegister() {
-        val bemanningsforetaksregisteret = lastNedRegister()
-        runBlocking { lagreRegister(bemanningsforetaksregisteret) }
-    }
+//    fun lastNedOgLagreRegister() {
+//        val bemanningsforetaksregisteret = lastNedRegister()
+//        runBlocking { lagreRegister(bemanningsforetaksregisteret) }
+//    }
 
-    suspend fun lagreRegister(register: List<BemanningsforetakDTO>) {
-        register.forEach {
-            valkey.set("${it.organisasjonsnummer}:${it.registernavn}", objectMapper.writeValueAsString(it)).await()
-        }
-        log.info("Lagret ${register.size} resultater fra bemanningsforetaksregisteret")
-    }
+//    suspend fun lagreRegister(register: List<BemanningsforetakDTO>) {
+//        register.forEach {
+//            valkey.set("${it.organisasjonsnummer}:${it.registernavn}", objectMapper.writeValueAsString(it)).await()
+//        }
+//        log.info("Lagret ${register.size} resultater fra bemanningsforetaksregisteret")
+//    }
 
     fun lastNedRegister(): List<BemanningsforetakDTO> {
         val url = URI(bemanningsforetakRegisterUrl)

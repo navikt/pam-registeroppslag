@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import glide.api.BaseClient
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
@@ -55,20 +56,20 @@ open class ApplicationContext(envInn: Map<String, String>) {
     val healthService = HealthService()
 
     val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
-        bemanningsforetakService.lastNedOgLagreRegister()
+        bemanningsforetakService.lastNedRegister()
     }
-    val valkey = runBlocking {
-        opprettValkeyKlient(
-            env.getValue("VALKEY_HOST_REGISTEROPPSLAG"),
-            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt()
-        )
-    }
+//    val valkey = runBlocking {
+//        opprettValkeyKlient(
+//            env.getValue("VALKEY_HOST_REGISTEROPPSLAG"),
+//            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt()
+//        )
+//    }
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
     val bemanningsforetakService =
         BemanningsforetakService(
             bemanningsforetakParser,
             httpClient,
-            valkey,
+//            valkey,
             objectMapper,
             env.getValue("BEMANNINGSFORETAKSREGISTER_URL")
         )
