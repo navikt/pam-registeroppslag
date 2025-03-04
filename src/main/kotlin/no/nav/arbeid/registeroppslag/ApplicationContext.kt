@@ -56,20 +56,20 @@ open class ApplicationContext(envInn: Map<String, String>) {
     val healthService = HealthService()
 
     val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
-        bemanningsforetakService.lastNedRegister()
+        bemanningsforetakService.lastNedOgLagreRegister()
     }
-//    val valkey = runBlocking {
-//        opprettValkeyKlient(
-//            env.getValue("VALKEY_HOST_REGISTEROPPSLAG"),
-//            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt()
-//        )
-//    }
+    val valkey = runBlocking {
+        opprettValkeyKlient(
+            env.getValue("VALKEY_HOST_REGISTEROPPSLAG"),
+            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt()
+        )
+    }
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
     val bemanningsforetakService =
         BemanningsforetakService(
             bemanningsforetakParser,
             httpClient,
-//            valkey,
+            valkey,
             objectMapper,
             env.getValue("BEMANNINGSFORETAKSREGISTER_URL")
         )

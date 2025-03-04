@@ -53,9 +53,9 @@ spec:
       claims:
         extra:
           - "NAVident"
-#  valkey:
-#    - instance: registeroppslag
-#      access: readwrite
+  valkey:
+    - instance: registeroppslag
+      access: readwrite
   env:
     - name: BEMANNINGSFORETAKSREGISTER_URL
       value: "https://data.arbeidstilsynet.no/bemanningsforetaksregisteret2/api/virksomheter"
