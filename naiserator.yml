@@ -30,9 +30,6 @@ spec:
   secureLogs:
     enabled: true
   observability:
-    autoInstrumentation:
-      enabled: true
-      runtime: java
     logging:
       destinations:
         - id: loki
@@ -56,3 +53,10 @@ spec:
       claims:
         extra:
           - "NAVident"
+  valkey:
+    - instance: registeroppslag
+      access: readwrite
+  env:
+    - name: BEMANNINGSFORETAKSREGISTER_URL
+      value: "https://data.arbeidstilsynet.no/bemanningsforetaksregisteret2/api/virksomheter"
+
