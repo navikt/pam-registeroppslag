@@ -15,7 +15,12 @@ val log: Logger = LoggerFactory.getLogger("no.nav.arbeid.registeroppslag.valkey.
 
 private suspend fun opprettEnkelValkeyKlient(env: Map<String, String>): GlideClient {
     val config = GlideClientConfiguration.builder()
-        .addresses(listOf(NodeAddress.builder()
+        .addresses(listOf(env["VALKEY_URI_REGISTEROPPSLAG"]?.split(":")?.let {
+            NodeAddress.builder()
+                .host(it[0])
+                .port(it[1].toInt())
+                .build()
+        } ?: NodeAddress.builder()
             .host(env.getValue("VALKEY_HOST_REGISTEROPPSLAG"))
             .port(env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt())
             .build()
@@ -51,6 +56,13 @@ private suspend fun opprettClusterValkeyKlient(env: Map<String, String>): GlideC
 }
 
 suspend fun opprettValkeyKlient(env: Map<String, String>): BaseClient {
+    log.info("""
+        VALKEY_URI_REGISTEROPPSLAG=${env["VALKEY_URI_REGISTEROPPSLAG"]}
+        VALKEY_HOST_REGISTEROPPSLAG=${env["VALKEY_HOST_REGISTEROPPSLAG"]}
+        VALKEY_PORT_REGISTEROPPSLAG=${env["VALKEY_PORT_REGISTEROPPSLAG"]}
+        VALKEY_USERNAME_REGISTEROPPSLAG=${env["VALKEY_USERNAME_REGISTEROPPSLAG"]}
+        VALKEY_PASSWORD_REGISTEROPPSLAG=${env["VALKEY_PASSWORD_REGISTEROPPSLAG"]}
+    """.trimIndent())
     return try {
         log.info("Oppretter cluster valkey klient")
         opprettClusterValkeyKlient(env)
