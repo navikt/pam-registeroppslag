@@ -13,14 +13,9 @@ import org.slf4j.LoggerFactory
 
 val log: Logger = LoggerFactory.getLogger("no.nav.arbeid.registeroppslag.valkey.ValkeyConfig")
 
-private suspend fun opprettEnkelValkeyKlient(env: Map<String, String>): GlideClient {
+fun opprettValkeyKlient(env: Map<String, String>): GlideClient {
     val config = GlideClientConfiguration.builder()
-        .addresses(listOf(env["VALKEY_URI_REGISTEROPPSLAG"]?.split(":")?.let {
-            NodeAddress.builder()
-                .host(it[0])
-                .port(it[1].toInt())
-                .build()
-        } ?: NodeAddress.builder()
+        .addresses(listOf(NodeAddress.builder()
             .host(env.getValue("VALKEY_HOST_REGISTEROPPSLAG"))
             .port(env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt())
             .build()
@@ -33,7 +28,12 @@ private suspend fun opprettEnkelValkeyKlient(env: Map<String, String>): GlideCli
         .useTLS(env.getValue("VALKEY_USE_TLS").toBoolean())
         .build()
 
-    return GlideClient.createClient(config).await()
+    return try {
+        GlideClient.createClient(config).get()
+    } catch (e: Exception) {
+        log.error("Oppretting av valkey klient feilet", e)
+        throw e
+    }
 }
 
 private suspend fun opprettClusterValkeyKlient(env: Map<String, String>): GlideClusterClient {
@@ -53,26 +53,4 @@ private suspend fun opprettClusterValkeyKlient(env: Map<String, String>): GlideC
         .build()
 
     return GlideClusterClient.createClient(config).await()
-}
-
-suspend fun opprettValkeyKlient(env: Map<String, String>): BaseClient {
-    log.info("""
-        VALKEY_URI_REGISTEROPPSLAG=${env["VALKEY_URI_REGISTEROPPSLAG"]}
-        VALKEY_HOST_REGISTEROPPSLAG=${env["VALKEY_HOST_REGISTEROPPSLAG"]}
-        VALKEY_PORT_REGISTEROPPSLAG=${env["VALKEY_PORT_REGISTEROPPSLAG"]}
-        VALKEY_USERNAME_REGISTEROPPSLAG=${env["VALKEY_USERNAME_REGISTEROPPSLAG"]}
-        VALKEY_PASSWORD_REGISTEROPPSLAG=${env["VALKEY_PASSWORD_REGISTEROPPSLAG"]}
-    """.trimIndent())
-    return try {
-        log.info("Oppretter cluster valkey klient")
-        opprettClusterValkeyKlient(env)
-    } catch (e: Exception) {
-        try {
-            log.warn("Feil ved oppretting av cluster valkey klient, forsøker enkel klient", e)
-            opprettEnkelValkeyKlient(env)
-        } catch (e: Exception) {
-            log.error("Oppretting av valkey klient feilet", e)
-            throw e
-        }
-    }
 }
