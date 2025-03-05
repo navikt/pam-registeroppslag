@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import glide.api.BaseClient
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
@@ -14,7 +13,6 @@ import io.micrometer.core.instrument.binder.system.ProcessorMetrics
 import io.micrometer.core.instrument.binder.system.UptimeMetrics
 import io.micrometer.prometheusmetrics.PrometheusConfig
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
-import kotlinx.coroutines.runBlocking
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakController
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakParser
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakService
@@ -58,7 +56,7 @@ open class ApplicationContext(envInn: Map<String, String>) {
     val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
         bemanningsforetakService.lastNedOgLagreRegister()
     }
-    val valkey = runBlocking { opprettValkeyKlient(env) }
+    val valkey = opprettValkeyKlient(env)
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
     val bemanningsforetakService =
         BemanningsforetakService(
