@@ -2,7 +2,6 @@ package no.nav.arbeid.registeroppslag.bemanningsforetak
 
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.future.await
 import kotlinx.coroutines.runBlocking
 import no.nav.arbeid.registeroppslag.Registerstatus
 import no.nav.arbeid.registeroppslag.RegisterstatusDTO
@@ -16,17 +15,18 @@ import org.junit.jupiter.api.Test
 class BemanningsforetakServiceTest : TestRunningApplication() {
     val parserMock = mockk<BemanningsforetakParser>()
     val registerdata = this::class.java.getResource("/bemanningsforetaksregister.json")!!.readBytes()
+    val valkey = appCtx.valkey
     lateinit var bftReg: List<BemanningsforetakDTO>
     lateinit var bftService: BemanningsforetakService
 
     @BeforeEach
     fun setOpp() {
-        assertThat(runBlocking { appCtx.valkey.dbsize().await() }).isEqualTo(0)
+        assertThat(valkey.dbsize()).isEqualTo(0)
         bftReg = appCtx.bemanningsforetakParser.parseRegister(registerdata)
         bftService = BemanningsforetakService(
             parser = parserMock,
             httpClient = appCtx.httpClient,
-            valkey = appCtx.valkey,
+            valkey = valkey,
             objectMapper = appCtx.objectMapper,
             bemanningsforetakRegisterUrl = "http://localhost"
         )
@@ -34,8 +34,8 @@ class BemanningsforetakServiceTest : TestRunningApplication() {
 
     @AfterEach
     fun ryddOpp() {
-        appCtx.valkey.flushdb()
-        assertThat(runBlocking { appCtx.valkey.dbsize().await() }).isEqualTo(0)
+        valkey.flushdb()
+        assertThat(valkey.dbsize()).isEqualTo(0)
     }
 
     @Test

@@ -17,9 +17,15 @@ import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 
 fun main() {
-    val env = System.getenv()
-    val appContext = ApplicationContext(env)
-    appContext.startApp()
+    val log: Logger = LoggerFactory.getLogger("no.nav.arbeid.registeroppslag")
+
+    try {
+        val env = System.getenv()
+        val appContext = ApplicationContext(env)
+        appContext.startApp()
+    } catch (e: Exception) {
+        log.error("Uventet Exception: ${e.message}", e)
+    }
 }
 
 const val KONSUMENT_ID_MDC_KEY = "konsument_id"

@@ -10,7 +10,7 @@ import org.testcontainers.utility.DockerImageName
  */
 class LocalApplicationContext(
     private val localEnv: MutableMap<String, String>,
-    val localValKey: GenericContainer<*> = GenericContainer(DockerImageName.parse("valkey/valkey:8.1"))
+    val localValKey: GenericContainer<*> = GenericContainer(DockerImageName.parse("valkey/valkey:8.0-alpine"))
         .waitingFor(Wait.forListeningPort())
         .apply {
             withExposedPorts(6379)

@@ -4,7 +4,6 @@ plugins {
     kotlin("jvm") version "2.0.21"
     id("com.gradleup.shadow") version "8.3.2"
     id("com.github.davidmc24.gradle.plugin.avro") version "1.9.1"
-    id("com.google.osdetector") version "1.7.3"
     application
 }
 
@@ -55,7 +54,7 @@ dependencies {
     implementation("org.codehaus.janino:janino:3.1.11")
     implementation("com.auth0:java-jwt:4.4.0")
 
-    implementation("io.valkey:valkey-glide:1.3.0:${osdetector.classifier}")
+    implementation("io.valkey:valkey-java:5.3.0")
     implementation("org.quartz-scheduler:quartz:2.5.0")
 
     testImplementation(kotlin("test"))

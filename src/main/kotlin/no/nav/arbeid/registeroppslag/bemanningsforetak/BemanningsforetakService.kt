@@ -1,11 +1,9 @@
 package no.nav.arbeid.registeroppslag.bemanningsforetak
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import glide.api.GlideClient
-import kotlinx.coroutines.future.await
-import kotlinx.coroutines.runBlocking
 import no.nav.arbeid.registeroppslag.Organisasjonsnummer
 import no.nav.arbeid.registeroppslag.RegisterstatusDTO
+import no.nav.arbeid.registeroppslag.valkey.ValkeyService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.net.URI
@@ -14,7 +12,7 @@ import java.net.http.HttpClient
 class BemanningsforetakService(
     private val parser: BemanningsforetakParser,
     private val httpClient: HttpClient,
-    private val valkey: GlideClient,
+    private val valkey: ValkeyService,
     private val objectMapper: ObjectMapper,
     private val bemanningsforetakRegisterUrl: String,
 ) {
@@ -23,7 +21,7 @@ class BemanningsforetakService(
     }
 
     fun hentBemanningsforetak(organisasjonsnummer: Organisasjonsnummer): BemanningsforetakDTO {
-        val resonseValue = runBlocking { valkey.get("${organisasjonsnummer}:bemanningsforetaksregisteret").await() }
+        val resonseValue = valkey.get("${organisasjonsnummer}:bemanningsforetaksregisteret")
         val bemanningsforetak = resonseValue?.let { objectMapper.readValue(it, BemanningsforetakDTO::class.java) }
             ?: BemanningsforetakDTO.ikkeRegistrert()
         log.info("Henter bemanningsforetak $bemanningsforetak")
@@ -41,12 +39,12 @@ class BemanningsforetakService(
 
     fun lastNedOgLagreRegister() {
         val bemanningsforetaksregisteret = lastNedRegister()
-        runBlocking { lagreRegister(bemanningsforetaksregisteret) }
+        lagreRegister(bemanningsforetaksregisteret)
     }
 
-    suspend fun lagreRegister(register: List<BemanningsforetakDTO>) {
+    fun lagreRegister(register: List<BemanningsforetakDTO>) {
         register.forEach {
-            valkey.set("${it.organisasjonsnummer}:${it.registernavn}", objectMapper.writeValueAsString(it)).await()
+            valkey.set("${it.organisasjonsnummer}:${it.registernavn}", objectMapper.writeValueAsString(it))
         }
         log.info("Lagret ${register.size} resultater fra bemanningsforetaksregisteret")
     }

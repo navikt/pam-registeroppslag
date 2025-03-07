@@ -56,7 +56,14 @@ spec:
   valkey:
     - instance: registeroppslag
       access: readwrite
+  accessPolicy:
+    outbound:
+      external:
+        - host: "data.arbeidstilsynet.no"
+        - host: "registerdata.arbeidstilsynet.no"
   env:
+    - name: VALKEY_USE_TLS
+      value: "true"
     - name: BEMANNINGSFORETAKSREGISTER_URL
       value: "https://data.arbeidstilsynet.no/bemanningsforetaksregisteret2/api/virksomheter"
 

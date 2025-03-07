@@ -1,14 +1,21 @@
 package no.nav.arbeid.registeroppslag.valkey
 
-import glide.api.GlideClient
-import glide.api.models.configuration.GlideClientConfiguration
-import glide.api.models.configuration.NodeAddress
-import kotlinx.coroutines.future.await
+import io.valkey.DefaultJedisClientConfig
+import io.valkey.HostAndPort
+import io.valkey.JedisPool
+import io.valkey.JedisPoolConfig
 
-suspend fun opprettValkeyKlient(host: String, port: Int): GlideClient {
-    val config = GlideClientConfiguration.builder()
-        .addresses(listOf(NodeAddress.builder().host(host).port(port).build()))
-        .build()
-
-    return GlideClient.createClient(config).await()
+fun opprettPool(env: Map<String, String>): JedisPool {
+    return JedisPool(
+        JedisPoolConfig(),
+        HostAndPort(
+            env.getValue("VALKEY_HOST_REGISTEROPPSLAG"),
+            env.getValue("VALKEY_PORT_REGISTEROPPSLAG").toInt()
+        ),
+        DefaultJedisClientConfig.builder()
+            .user(env.getValue("VALKEY_USERNAME_REGISTEROPPSLAG"))
+            .password(env.getValue("VALKEY_PASSWORD_REGISTEROPPSLAG"))
+            .ssl(env.getValue("VALKEY_USE_TLS").toBoolean())
+            .build()
+        )
 }
