@@ -22,11 +22,10 @@ class LeaderElector(
             log.info("Ingen leader election, denne noden er leader")
             return InetAddress.getLocalHost().hostName
         }
-        val leader: Elector = objectMapper.readValue(URI.create(electorUrl).toURL(), Elector::class.java)
-        log.info("Leader er $leader")
-        return leader.toString()
+        val leader: Elector = objectMapper.readValue(URI(electorUrl).toURL(), Elector::class.java)
+        log.info("Leader er ${leader.name}")
+        return leader.name
     }
 }
 
-@JvmInline
-value class Elector(private val name: String)
+data class Elector(val name: String)
