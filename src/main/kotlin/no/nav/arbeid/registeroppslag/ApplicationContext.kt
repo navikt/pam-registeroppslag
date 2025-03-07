@@ -54,8 +54,16 @@ open class ApplicationContext(envInn: Map<String, String>) {
 
     val healthService = HealthService()
 
+    val leaderElector = LeaderElector(
+        env.getValue("ELECTOR_GET_URL"),
+        env["NO_LEADER_ELECTION"]?.toBoolean() ?: false,
+        objectMapper,
+    )
+
     open val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
-        bemanningsforetakService.lastNedOgLagreRegister()
+        if (leaderElector.erLeader) {
+            bemanningsforetakService.lastNedOgLagreRegister()
+        }
     }
     val valkey = ValkeyService(opprettPool(env))
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)

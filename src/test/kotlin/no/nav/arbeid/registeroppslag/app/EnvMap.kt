@@ -11,5 +11,7 @@ val env = mutableMapOf(
     "VALKEY_USERNAME_REGISTEROPPSLAG" to "default",
     "VALKEY_PASSWORD_REGISTEROPPSLAG" to "",
     "VALKEY_USE_TLS" to "false",
+    "ELECTOR_GET_URL" to "http://localhost/leader",
+    "NO_LEADER_ELECTION" to "true",
     "BEMANNINGSFORETAKSREGISTER_URL" to "https://registerdata.arbeidstilsynet.no/Bemanning_register.json",
 )
