@@ -20,7 +20,8 @@ import no.nav.arbeid.registeroppslag.config.TokenConfig
 import no.nav.arbeid.registeroppslag.nais.HealthService
 import no.nav.arbeid.registeroppslag.nais.NaisController
 import no.nav.arbeid.registeroppslag.scheduler.Scheduler
-import no.nav.arbeid.registeroppslag.valkey.opprettValkeyKlient
+import no.nav.arbeid.registeroppslag.valkey.ValkeyService
+import no.nav.arbeid.registeroppslag.valkey.opprettPool
 import java.net.http.HttpClient
 import java.util.*
 
@@ -53,10 +54,10 @@ open class ApplicationContext(envInn: Map<String, String>) {
 
     val healthService = HealthService()
 
-    val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
+    open val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
         bemanningsforetakService.lastNedOgLagreRegister()
     }
-    val valkey = opprettValkeyKlient(env)
+    val valkey = ValkeyService(opprettPool(env))
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
     val bemanningsforetakService =
         BemanningsforetakService(

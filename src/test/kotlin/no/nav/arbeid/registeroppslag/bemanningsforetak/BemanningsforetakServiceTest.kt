@@ -1,9 +1,7 @@
 package no.nav.arbeid.registeroppslag.bemanningsforetak
 
-import glide.api.GlideClient
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.future.await
 import kotlinx.coroutines.runBlocking
 import no.nav.arbeid.registeroppslag.Registerstatus
 import no.nav.arbeid.registeroppslag.RegisterstatusDTO
@@ -17,13 +15,14 @@ import org.junit.jupiter.api.Test
 class BemanningsforetakServiceTest : TestRunningApplication() {
     val parserMock = mockk<BemanningsforetakParser>()
     val registerdata = this::class.java.getResource("/bemanningsforetaksregister.json")!!.readBytes()
-    val valkey = appCtx.valkey as GlideClient
+    val valkey = appCtx.valkey
     lateinit var bftReg: List<BemanningsforetakDTO>
     lateinit var bftService: BemanningsforetakService
 
     @BeforeEach
     fun setOpp() {
-        assertThat(runBlocking { valkey.dbsize().await() }).isEqualTo(0)
+        println("Det er ${valkey.getallKeys()} keys i databasen")
+        assertThat(valkey.dbsize()).isEqualTo(0)
         bftReg = appCtx.bemanningsforetakParser.parseRegister(registerdata)
         bftService = BemanningsforetakService(
             parser = parserMock,
@@ -37,7 +36,7 @@ class BemanningsforetakServiceTest : TestRunningApplication() {
     @AfterEach
     fun ryddOpp() {
         valkey.flushdb()
-        assertThat(runBlocking { valkey.dbsize().await() }).isEqualTo(0)
+        assertThat(valkey.dbsize()).isEqualTo(0)
     }
 
     @Test

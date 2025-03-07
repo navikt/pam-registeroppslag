@@ -1,6 +1,7 @@
 package no.nav.arbeid.registeroppslag.app.test
 
 import no.nav.arbeid.registeroppslag.ApplicationContext
+import no.nav.arbeid.registeroppslag.scheduler.Scheduler
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -13,7 +14,7 @@ import org.testcontainers.utility.DockerImageName
  */
 class TestApplicationContext(
     private val localEnv: MutableMap<String, String>,
-    val localValKey: GenericContainer<*> = GenericContainer(DockerImageName.parse("valkey/valkey:8.1"))
+    val localValKey: GenericContainer<*> = GenericContainer(DockerImageName.parse("valkey/valkey:8.0-alpine"))
         .waitingFor(Wait.forListeningPort())
         .apply {
             withExposedPorts(6379)
@@ -22,13 +23,14 @@ class TestApplicationContext(
         .also { localConfig ->
             localEnv["VALKEY_HOST_REGISTEROPPSLAG"] = localConfig.host
             localEnv["VALKEY_PORT_REGISTEROPPSLAG"] = localConfig.getMappedPort(6379).toString()
-            localEnv["VALKEY_USERNAME_REGISTEROPPSLAG"] = ""
-            localEnv["VALKEY_PASSWORD_REGISTEROPPSLAG"] = ""
-            localEnv["VALKEY_USE_TLS"] = false.toString()
         }
 ) : ApplicationContext(localEnv) {
 
     private val log: Logger = LoggerFactory.getLogger("LocalApplicationContext")
+
+    override val scheduler: Scheduler = Scheduler {
+        println("Kjører i testmodus, scheduler kjøres ikke")
+    }
 
     val mockOauth2Server = MockOAuth2Server().also { server ->
         server.start()

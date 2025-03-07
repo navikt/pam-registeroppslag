@@ -56,14 +56,14 @@ class BemanningsforetakParser(
         val registerData = objectMapper.readTree(register)["data"]
         val registerParsed: MutableList<BemanningsforetakDTO> = mutableListOf()
 
-        log.info("Legger til enheter i bemanningsforetaksregisteret")
+        log.info("Parser hoved- og underenheter i bemanningsforetaksregisteret")
         registerData.forEach { enhet ->
             registerParsed.add(BemanningsforetakDTO.fraJson(enhet)) // Legger til hovedenhet
             enhet["underenheter"]?.let { underenheter ->
                 registerParsed.addAll(underenheter.map { BemanningsforetakDTO.fraJson(it) }) // Legger til underenheter
             }
         }
-
+        log.info("Parset ${registerParsed.size} enheter")
         return registerParsed
     }
 }

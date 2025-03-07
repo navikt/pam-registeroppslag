@@ -10,7 +10,7 @@ import org.testcontainers.utility.DockerImageName
  */
 class LocalApplicationContext(
     private val localEnv: MutableMap<String, String>,
-    val localValKey: GenericContainer<*> = GenericContainer(DockerImageName.parse("valkey/valkey:8.1"))
+    val localValKey: GenericContainer<*> = GenericContainer(DockerImageName.parse("valkey/valkey:8.0-alpine"))
         .waitingFor(Wait.forListeningPort())
         .apply {
             withExposedPorts(6379)
@@ -19,8 +19,5 @@ class LocalApplicationContext(
         .also { localConfig ->
             localEnv["VALKEY_HOST_REGISTEROPPSLAG"] = localConfig.host
             localEnv["VALKEY_PORT_REGISTEROPPSLAG"] = localConfig.getMappedPort(6379).toString()
-            localEnv["VALKEY_USERNAME_REGISTEROPPSLAG"] = ""
-            localEnv["VALKEY_PASSWORD_REGISTEROPPSLAG"] = ""
-            localEnv["VALKEY_USE_TLS"] = false.toString()
         }
 ) : ApplicationContext(localEnv)
