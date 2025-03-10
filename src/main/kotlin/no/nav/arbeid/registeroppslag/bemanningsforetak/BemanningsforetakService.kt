@@ -3,6 +3,7 @@ package no.nav.arbeid.registeroppslag.bemanningsforetak
 import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.arbeid.registeroppslag.Organisasjonsnummer
 import no.nav.arbeid.registeroppslag.RegisterstatusDTO
+import no.nav.arbeid.registeroppslag.metrikker.Metrikker
 import no.nav.arbeid.registeroppslag.valkey.ValkeyService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -14,6 +15,7 @@ class BemanningsforetakService(
     private val httpClient: HttpClient,
     private val valkey: ValkeyService,
     private val objectMapper: ObjectMapper,
+    private val metrikker: Metrikker,
     private val bemanningsforetakRegisterUrl: String,
 ) {
     companion object {
@@ -40,6 +42,7 @@ class BemanningsforetakService(
     fun lastNedOgLagreRegister() {
         val bemanningsforetaksregisteret = lastNedRegister()
         lagreRegister(bemanningsforetaksregisteret)
+        metrikker.lastetNedOgLagretBemmaningsforetak()
     }
 
     fun lagreRegister(register: List<BemanningsforetakDTO>) {

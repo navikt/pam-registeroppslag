@@ -28,6 +28,7 @@ class BemanningsforetakServiceTest : TestRunningApplication() {
             httpClient = appCtx.httpClient,
             valkey = valkey,
             objectMapper = appCtx.objectMapper,
+            metrikker = appCtx.metrikker,
             bemanningsforetakRegisterUrl = "http://localhost"
         )
     }

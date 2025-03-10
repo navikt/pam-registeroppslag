@@ -17,6 +17,7 @@ import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakControll
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakParser
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakService
 import no.nav.arbeid.registeroppslag.config.TokenConfig
+import no.nav.arbeid.registeroppslag.metrikker.Metrikker
 import no.nav.arbeid.registeroppslag.nais.HealthService
 import no.nav.arbeid.registeroppslag.nais.NaisController
 import no.nav.arbeid.registeroppslag.scheduler.Scheduler
@@ -45,6 +46,8 @@ open class ApplicationContext(envInn: Map<String, String>) {
         ProcessorMetrics().bindTo(registry)
     }
 
+    val metrikker = Metrikker(prometheusRegistry)
+
     val httpClient: HttpClient = HttpClient.newBuilder()
         .followRedirects(HttpClient.Redirect.ALWAYS)
         .version(HttpClient.Version.HTTP_1_1)
@@ -69,11 +72,12 @@ open class ApplicationContext(envInn: Map<String, String>) {
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
     val bemanningsforetakService =
         BemanningsforetakService(
-            bemanningsforetakParser,
-            httpClient,
-            valkey,
-            objectMapper,
-            env.getValue("BEMANNINGSFORETAKSREGISTER_URL")
+            parser = bemanningsforetakParser,
+            httpClient = httpClient,
+            valkey = valkey,
+            objectMapper = objectMapper,
+            metrikker = metrikker,
+            bemanningsforetakRegisterUrl = env.getValue("BEMANNINGSFORETAKSREGISTER_URL")
         )
 
     val naisController = NaisController(healthService, prometheusRegistry)
