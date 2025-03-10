@@ -15,7 +15,7 @@ class LeaderElector(
         val log: Logger = LoggerFactory.getLogger(LeaderElector::class.java)
     }
 
-    val erLeader: Boolean = InetAddress.getLocalHost().hostName == hentLeader()
+    fun erLeader() = InetAddress.getLocalHost().hostName == hentLeader()
 
     private fun hentLeader(): String {
         if (noLeaderElection) {

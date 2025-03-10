@@ -24,7 +24,7 @@ class NaisController(
             { it.contentType(TextFormat.CONTENT_TYPE_004).result(prometheusMeterRegistry.scrape()) },
             Rolle.UNPROTECTED
         )
-        javalin.get("/internal/leader", { it.json(leaderElector.erLeader) }, Rolle.UNPROTECTED)
+        javalin.get("/internal/leader", { it.json(leaderElector.erLeader()) }, Rolle.UNPROTECTED)
     }
 }
 

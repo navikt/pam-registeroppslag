@@ -64,7 +64,7 @@ open class ApplicationContext(envInn: Map<String, String>) {
     )
 
     open val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
-        if (leaderElector.erLeader) {
+        if (leaderElector.erLeader()) {
             bemanningsforetakService.lastNedOgLagreRegister()
         }
     }
