@@ -80,7 +80,7 @@ open class ApplicationContext(envInn: Map<String, String>) {
             bemanningsforetakRegisterUrl = env.getValue("BEMANNINGSFORETAKSREGISTER_URL")
         )
 
-    val naisController = NaisController(healthService, prometheusRegistry)
+    val naisController = NaisController(healthService, prometheusRegistry, leaderElector)
     val bemanningsforetakController = BemanningsforetakController(bemanningsforetakService)
 
 }
