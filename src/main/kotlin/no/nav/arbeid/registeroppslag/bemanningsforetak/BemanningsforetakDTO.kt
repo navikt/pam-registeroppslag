@@ -12,6 +12,7 @@ data class BemanningsforetakDTO(
     val registerstatus: Registerstatus,
     val registerstatusTekst: String,
     val godkjenningsstatus: String,
+    val underenheter: List<BemanningsforetakDTO>?,
 ) {
     companion object {
         fun fraJson(jsonNode: JsonNode): BemanningsforetakDTO {
@@ -24,6 +25,7 @@ data class BemanningsforetakDTO(
                 registerstatus = Registerstatus.entries[jsonNode["registerstatus"].asInt()],
                 registerstatusTekst = jsonNode["registerstatusTekst"].asText(),
                 godkjenningsstatus = jsonNode["godkjenningsstatus"].asText(),
+                underenheter = jsonNode["underenheter"]?.map { fraJson(it) } ?: emptyList(),
             )
         }
 
@@ -35,7 +37,15 @@ data class BemanningsforetakDTO(
                 registerstatus = Registerstatus.IKKE_REGISTRERT,
                 registerstatusTekst = "Ikke registrert",
                 godkjenningsstatus = "Ikke Registrert",
+                underenheter = emptyList(),
             )
         }
     }
 }
+
+data class Metadata(val versjon: String, val datoTidGenerert: String)
+data class BemanningsforetaksregisterDTO(
+    val metadata: Metadata,
+    val registernavn: String,
+    val data: List<BemanningsforetakDTO>,
+)
