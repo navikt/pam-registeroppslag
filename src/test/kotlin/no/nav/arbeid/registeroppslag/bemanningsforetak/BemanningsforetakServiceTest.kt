@@ -126,4 +126,17 @@ class BemanningsforetakServiceTest : TestRunningApplication() {
 
         assertThat(lagretForetak).isEqualTo(bftReg.first())
     }
+
+    @Test
+    fun `Skal overskrive eksisterende bemanningsforetak`() {
+        runBlocking { bftService.lagreRegister(bftReg) }
+        val nyttForetak = bftReg.first().copy(registerstatus = Registerstatus.IKKE_REGISTRERT)
+
+        runBlocking { bftService.lagreRegister(listOf(nyttForetak)) }
+
+        val lagretForetak = bftService.hentBemanningsforetak(nyttForetak.organisasjonsnummer)
+
+        assertThat(lagretForetak).isEqualTo(nyttForetak)
+        assertThat(lagretForetak).isNotEqualTo(bftReg.first())
+    }
 }
