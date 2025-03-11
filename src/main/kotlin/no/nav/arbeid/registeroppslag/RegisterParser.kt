@@ -21,8 +21,10 @@ interface RegisterParser {
             .build()
 
         log.info("Laster ned $registerNavn fra $registerUrl")
-        val response = httpClient.send(request, BodyHandlers.ofString())
-        log.info("Mottok: ${response.body()}")
-        return response.body().toByteArray()
+        val response = httpClient.send(request, BodyHandlers.ofByteArray())
+        return when (response.statusCode()) {
+            200 -> response.body()
+            else -> throw RuntimeException("Feil ved forespørsel mot $registerNavn, ${response.statusCode()}: ${response.body().decodeToString()}")
+        }
     }
 }
