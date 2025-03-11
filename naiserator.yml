@@ -60,9 +60,10 @@ spec:
     outbound:
       external:
         - host: "registerdata.arbeidstilsynet.no"
+        - host: "data.arbeidstilsynet.no"
   env:
     - name: VALKEY_USE_TLS
       value: "true"
     - name: BEMANNINGSFORETAKSREGISTER_URL
-      value: "https://registerdata.arbeidstilsynet.no/Bemanning_register.json"
+      value: "https://data.arbeidstilsynet.no/bemanningsforetaksregisteret2/api/virksomheter"
 
