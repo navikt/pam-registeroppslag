@@ -24,6 +24,7 @@ import no.nav.arbeid.registeroppslag.scheduler.Scheduler
 import no.nav.arbeid.registeroppslag.valkey.ValkeyService
 import no.nav.arbeid.registeroppslag.valkey.opprettPool
 import java.net.http.HttpClient
+import java.time.Duration
 import java.util.*
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -63,11 +64,19 @@ open class ApplicationContext(envInn: Map<String, String>) {
         objectMapper,
     )
 
-    open val scheduler = Scheduler("0 0 6 * * ?") { // Kjør hver dag kl 06:00
-        if (leaderElector.erLeader()) {
-            bemanningsforetakService.lastNedOgLagreRegister()
+    open val scheduler = Scheduler("0 0 6 * * ?") { // Kjører kl 06:00 UTC
+        repeat(3) {
+            try {
+                require(leaderElector.erLeader()) { "Er ikke leader" }
+                bemanningsforetakService.lastNedOgLagreRegister()
+                return@Scheduler
+            } catch (e: Exception) {
+                Scheduler.log.warn("Feil i scheduler: ${e.message}, forsøker igjen for ${it.inc()}. gang om 2 minutter", e)
+                Thread.sleep(Duration.ofMinutes(2))
+            }
         }
     }
+
     val valkey = ValkeyService(opprettPool(env))
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
     val bemanningsforetakService =

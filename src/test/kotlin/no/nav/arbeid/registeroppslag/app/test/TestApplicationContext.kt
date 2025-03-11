@@ -29,7 +29,7 @@ class TestApplicationContext(
     private val log: Logger = LoggerFactory.getLogger("LocalApplicationContext")
 
     override val scheduler: Scheduler = Scheduler {
-        println("Kjører i testmodus, scheduler kjøres ikke")
+        Scheduler.log.info("Kjører i testmodus, scheduler kjøres ikke")
     }
 
     val mockOauth2Server = MockOAuth2Server().also { server ->
