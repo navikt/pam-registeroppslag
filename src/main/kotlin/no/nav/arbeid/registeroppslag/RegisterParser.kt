@@ -21,7 +21,8 @@ interface RegisterParser {
             .build()
 
         log.info("Laster ned $registerNavn fra $registerUrl")
-        val response = httpClient.send(request, BodyHandlers.ofByteArray())
-        return response.body()
+        val response = httpClient.send(request, BodyHandlers.ofString())
+        log.info("Mottok: ${response.body()}")
+        return response.body().toByteArray()
     }
 }
