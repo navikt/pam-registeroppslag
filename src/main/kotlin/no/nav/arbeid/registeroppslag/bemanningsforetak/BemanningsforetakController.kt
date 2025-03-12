@@ -10,9 +10,9 @@ class BemanningsforetakController(
     private val bemanningsforetakService: BemanningsforetakService,
 ) {
     fun setupRoutes(javalin: Javalin) {
-        javalin.get("/api/bemanningsforetak/lastned", { lastNedOgLagreRegister(it) }, Rolle.PÅLOGGET)
-        javalin.get("/api/bemanningsforetak/{orgnr}", { hentBemanningsforetak(it) }, Rolle.PÅLOGGET)
-        javalin.get("/api/bemanningsforetak/{orgnr}/status", { hentBemanningsforetakStatus(it) }, Rolle.PÅLOGGET)
+        javalin.get("/api/bemanningsforetak/lastned", { lastNedOgLagreRegister(it) }, Rolle.UNPROTECTED)
+        javalin.get("/api/bemanningsforetak/{orgnr}", { hentBemanningsforetak(it) }, Rolle.UNPROTECTED)
+        javalin.get("/api/bemanningsforetak/{orgnr}/status", { hentBemanningsforetakStatus(it) }, Rolle.UNPROTECTED)
     }
 
     fun hentBemanningsforetak(ctx: Context) {
