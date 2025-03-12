@@ -57,6 +57,9 @@ spec:
     - instance: registeroppslag
       access: readwrite
   accessPolicy:
+    inbound:
+      rules:
+        - application: pam-nss-admin
     outbound:
       external:
         - host: "registerdata.arbeidstilsynet.no"
