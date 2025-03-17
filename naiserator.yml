@@ -61,6 +61,8 @@ spec:
       rules:
         - application: pam-nss-admin
     outbound:
+      rules:
+        - application: pam-nss-admin
       external:
         - host: "registerdata.arbeidstilsynet.no"
         - host: "data.arbeidstilsynet.no"
