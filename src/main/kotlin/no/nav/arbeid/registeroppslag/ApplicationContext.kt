@@ -91,6 +91,6 @@ open class ApplicationContext(envInn: Map<String, String>) {
     }
 
     val naisController = NaisController(healthService, prometheusRegistry, leaderElector)
-    val bemanningsforetakController = BemanningsforetakController(bemanningsforetakService)
+    open val bemanningsforetakController by lazy { BemanningsforetakController(bemanningsforetakService) }
 
 }

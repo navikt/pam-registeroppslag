@@ -6,7 +6,7 @@ import io.javalin.http.HttpStatus
 import no.nav.arbeid.registeroppslag.Organisasjonsnummer
 import no.nav.arbeid.registeroppslag.sikkerhet.Rolle
 
-class BemanningsforetakController(
+data class BemanningsforetakController(
     private val bemanningsforetakService: BemanningsforetakService,
 ) {
     fun setupRoutes(javalin: Javalin) {
@@ -29,6 +29,10 @@ class BemanningsforetakController(
 
     fun lastNedOgLagreRegister(ctx: Context) {
         bemanningsforetakService.lastNedOgLagreRegister()
-        ctx.status(HttpStatus.OK)
+        ctx.apply {
+            status(HttpStatus.OK)
+            result("Lastet ned og lagret bemanningsforetaksregisteret")
+            contentType("text/plain")
+        }
     }
 }
