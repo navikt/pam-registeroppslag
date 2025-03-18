@@ -79,7 +79,7 @@ open class ApplicationContext(envInn: Map<String, String>) {
 
     val valkey = ValkeyService(opprettPool(env))
     val bemanningsforetakParser = BemanningsforetakParser(objectMapper)
-    val bemanningsforetakService =
+    open val bemanningsforetakService by lazy {
         BemanningsforetakService(
             parser = bemanningsforetakParser,
             httpClient = httpClient,
@@ -88,6 +88,7 @@ open class ApplicationContext(envInn: Map<String, String>) {
             metrikker = metrikker,
             bemanningsforetakRegisterUrl = env.getValue("BEMANNINGSFORETAKSREGISTER_URL")
         )
+    }
 
     val naisController = NaisController(healthService, prometheusRegistry, leaderElector)
     val bemanningsforetakController = BemanningsforetakController(bemanningsforetakService)

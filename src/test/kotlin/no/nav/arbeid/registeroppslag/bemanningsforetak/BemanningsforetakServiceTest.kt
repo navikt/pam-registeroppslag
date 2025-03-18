@@ -1,37 +1,21 @@
 package no.nav.arbeid.registeroppslag.bemanningsforetak
 
 import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import no.nav.arbeid.registeroppslag.Registerstatus
 import no.nav.arbeid.registeroppslag.RegisterstatusDTO
 import no.nav.arbeid.registeroppslag.app.test.TestRunningApplication
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 
 class BemanningsforetakServiceTest : TestRunningApplication() {
-    val parserMock = mockk<BemanningsforetakParser>()
     val registerdata = this::class.java.getResource("/bemanningsforetaksregister.json")!!.readBytes()
+    val bftReg: List<BemanningsforetakDTO> = appCtx.bemanningsforetakParser.parseRegister(registerdata)
     val valkey = appCtx.valkey
-    lateinit var bftReg: List<BemanningsforetakDTO>
-    lateinit var bftService: BemanningsforetakService
-
-    @BeforeEach
-    fun setOpp() {
-        assertThat(valkey.dbsize()).isEqualTo(0)
-        bftReg = appCtx.bemanningsforetakParser.parseRegister(registerdata)
-        bftService = BemanningsforetakService(
-            parser = parserMock,
-            httpClient = appCtx.httpClient,
-            valkey = valkey,
-            objectMapper = appCtx.objectMapper,
-            metrikker = appCtx.metrikker,
-            bemanningsforetakRegisterUrl = "http://localhost"
-        )
-    }
+    val parserMock = appCtx.bemanningsforetakParserMock
+    val bftService = appCtx.bemanningsforetakService
 
     @AfterEach
     fun ryddOpp() {

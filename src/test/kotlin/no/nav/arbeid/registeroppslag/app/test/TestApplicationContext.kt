@@ -1,6 +1,8 @@
 package no.nav.arbeid.registeroppslag.app.test
 
+import io.mockk.mockk
 import no.nav.arbeid.registeroppslag.ApplicationContext
+import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakParser
 import no.nav.arbeid.registeroppslag.scheduler.Scheduler
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import org.slf4j.Logger
@@ -28,9 +30,14 @@ class TestApplicationContext(
 
     private val log: Logger = LoggerFactory.getLogger("LocalApplicationContext")
 
+    val bemanningsforetakParserMock = mockk<BemanningsforetakParser>()
     override val scheduler: Scheduler = Scheduler {
         Scheduler.log.info("Kjører i testmodus, scheduler kjøres ikke")
     }
+    override val bemanningsforetakService = super.bemanningsforetakService.copy(
+            parser = bemanningsforetakParserMock,
+            bemanningsforetakRegisterUrl = "http://localhost"
+        )
 
     val mockOauth2Server = MockOAuth2Server().also { server ->
         server.start()

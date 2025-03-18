@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 import java.net.URI
 import java.net.http.HttpClient
 
-class BemanningsforetakService(
+data class BemanningsforetakService(
     private val parser: BemanningsforetakParser,
     private val httpClient: HttpClient,
     private val valkey: ValkeyService,
