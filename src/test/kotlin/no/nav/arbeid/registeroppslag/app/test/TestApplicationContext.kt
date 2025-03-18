@@ -36,6 +36,7 @@ class TestApplicationContext(
     val bemanningsforetakServiceMock = mockk<BemanningsforetakService>()
     override val scheduler: Scheduler = Scheduler {
         Scheduler.log.info("Kjører i testmodus, scheduler kjøres ikke")
+        appCtx.scheduler.stop()
     }
     override val bemanningsforetakService = super.bemanningsforetakService.copy(
             parser = bemanningsforetakParserMock,
