@@ -10,7 +10,7 @@ spec:
     - name: "teampam pam-registeroppslag alerts"
       rules:
         - alert: Feil i nedlasting av bemanningsforetaksregisteret
-          expr: sum(increase(pam_registeroppslag_nedlasting_bemanningsforetak_total[1d])) < 1
+          expr: sum(changes(pam_registeroppslag_nedlasting_bemanningsforetak_total[1d])) < 1
           for: 1h
           labels:
             severity: danger
