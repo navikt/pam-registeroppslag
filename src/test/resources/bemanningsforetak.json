@@ -1,0 +1,10 @@
+{
+  "registernavn": "bemanningsforetaksregisteret",
+  "organisasjonsnummer": "123456789",
+  "overordnetEnhet": null,
+  "navn": "Bemanningsforetak AS",
+  "registerstatus": "GODKJENT",
+  "registerstatusTekst": "Godkjent",
+  "godkjenningsstatus": "Godkjent",
+  "underenheter": []
+}

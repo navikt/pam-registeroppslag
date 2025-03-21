@@ -1,14 +1,14 @@
-name: Deploy alerts to NAIS
+name: Deploy alerts to NAIS dev-gcp
 on:
   push:
     branches:
-      - main
+      - '**'
     paths:
       - 'naiserator-alerts.yml'
-      - '.github/workflows/alerts.yml'
+      - 'alerts-dev.yml'
 jobs:
   apply-alerts:
-    name: Apply alerts to cluster
+    name: Apply alerts to dev
     permissions:
       id-token: write
       contents: read
@@ -16,8 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: deploy to prod
+      - name: deploy to dev
         uses: nais/deploy/actions/deploy@v2
         env:
-          CLUSTER: prod-gcp
+          CLUSTER: dev-gcp
           RESOURCE: naiserator-alerts.yml
