@@ -44,6 +44,7 @@ dependencies {
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion")
 
     implementation("no.nav.security:token-validation-core:$tokenSupportVersion")
     implementation("no.nav.security:token-client-core:$tokenSupportVersion")
