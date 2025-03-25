@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ArrayOfRenholdsvirksomhet xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Renholdsvirksomhet>
+        <Organisasjonsnummer>123456789</Organisasjonsnummer>
+        <Navn>Reidun Renhold og Rengjøring AS</Navn>
+        <Adresse>
+            <Gateadresse>Kantarellveien 56</Gateadresse>
+            <Postnummer>1476</Postnummer>
+            <Poststed>RASTA</Poststed>
+            <Kommunenummer>3222</Kommunenummer>
+            <Kommune>LØRENSKOG</Kommune>
+            <Fylkesnummer>32</Fylkesnummer>
+            <Fylke>Akershus</Fylke>
+        </Adresse>
+        <Underavdelinger>
+            <Avdeling>
+                <Organisasjonsnummer>111111111</Organisasjonsnummer>
+                <Navn>Reidun Renhold AS</Navn>
+                <Adresse>
+                    <Gateadresse>Kantarellveien 56</Gateadresse>
+                    <Postnummer>1476</Postnummer>
+                    <Poststed>RASTA</Poststed>
+                    <Kommunenummer>3222</Kommunenummer>
+                    <Kommune>LØRENSKOG</Kommune>
+                    <Fylkesnummer>32</Fylkesnummer>
+                    <Fylke>Akershus</Fylke>
+                </Adresse>
+            </Avdeling>
+            <Avdeling>
+                <Organisasjonsnummer>222222222</Organisasjonsnummer>
+                <Navn>Reidun Rengjøring AS</Navn>
+                <Adresse>
+                    <Gateadresse>Kantarellveien 56</Gateadresse>
+                    <Postnummer>1476</Postnummer>
+                    <Poststed>RASTA</Poststed>
+                    <Kommunenummer>3222</Kommunenummer>
+                    <Kommune>LØRENSKOG</Kommune>
+                    <Fylkesnummer>32</Fylkesnummer>
+                    <Fylke>Akershus</Fylke>
+                </Adresse>
+            </Avdeling>
+        </Underavdelinger>
+        <Status>Godkjent med ansatte</Status>
+    </Renholdsvirksomhet>
+    <Renholdsvirksomhet>
+        <Organisasjonsnummer>987654321</Organisasjonsnummer>
+        <Navn>Reinert Rens og Renhold AS</Navn>
+        <Adresse>
+            <Gateadresse>Granveien 12</Gateadresse>
+            <Postnummer>1476</Postnummer>
+            <Poststed>RASTA</Poststed>
+            <Kommunenummer>3222</Kommunenummer>
+            <Kommune>LØRENSKOG</Kommune>
+            <Fylkesnummer>32</Fylkesnummer>
+            <Fylke>Akershus</Fylke>
+        </Adresse>
+        <Underavdelinger>
+            <Avdeling>
+                <Organisasjonsnummer>333333333</Organisasjonsnummer>
+                <Navn>Reinert Rens AS</Navn>
+                <Adresse>
+                    <Gateadresse>Granveien 12</Gateadresse>
+                    <Postnummer>1476</Postnummer>
+                    <Poststed>RASTA</Poststed>
+                    <Kommunenummer>3222</Kommunenummer>
+                    <Kommune>LØRENSKOG</Kommune>
+                    <Fylkesnummer>32</Fylkesnummer>
+                    <Fylke>Akershus</Fylke>
+                </Adresse>
+            </Avdeling>
+        </Underavdelinger>
+        <Status>Ikke godkjent</Status>
+    </Renholdsvirksomhet>
+    <Renholdsvirksomhet>
+        <Organisasjonsnummer>123123123</Organisasjonsnummer>
+        <Navn>Renhold AS</Navn>
+        <Adresse>
+            <Gateadresse>Kantarellveien 24</Gateadresse>
+            <Postnummer>1476</Postnummer>
+            <Poststed>RASTA</Poststed>
+            <Kommunenummer>3222</Kommunenummer>
+            <Kommune>LØRENSKOG</Kommune>
+            <Fylkesnummer>32</Fylkesnummer>
+            <Fylke>Akershus</Fylke>
+        </Adresse>
+        <Underavdelinger/>
+        <Status>Godkjent uten ansatte</Status>
+    </Renholdsvirksomhet>
+    <Renholdsvirksomhet>
+        <Organisasjonsnummer>321321321</Organisasjonsnummer>
+        <Navn>Renhold og Rengjøring AS</Navn>
+        <Adresse>
+            <Gateadresse>Morellveien 98</Gateadresse>
+            <Postnummer>1476</Postnummer>
+            <Poststed>RASTA</Poststed>
+            <Kommunenummer>3222</Kommunenummer>
+            <Kommune>LØRENSKOG</Kommune>
+            <Fylkesnummer>32</Fylkesnummer>
+            <Fylke>Akershus</Fylke>
+        </Adresse>
+        <Underavdelinger>
+            <Avdeling>
+                <Organisasjonsnummer>444444444</Organisasjonsnummer>
+                <Navn>Renhold AS</Navn>
+                <Adresse>
+                    <Gateadresse>Morellveien 98</Gateadresse>
+                    <Postnummer>1476</Postnummer>
+                    <Poststed>RASTA</Poststed>
+                    <Kommunenummer>3222</Kommunenummer>
+                    <Kommune>LØRENSKOG</Kommune>
+                    <Fylkesnummer>32</Fylkesnummer>
+                    <Fylke>Akershus</Fylke>
+                </Adresse>
+            </Avdeling>
+        </Underavdelinger>
+        <Status>Under HMS-kortbestilling</Status>
+    </Renholdsvirksomhet>
+    <Renholdsvirksomhet>
+        <Organisasjonsnummer>456456456</Organisasjonsnummer>
+        <Navn>Rask Renhold AS</Navn>
+        <Adresse>
+            <Gateadresse>Raskenlundveien 1</Gateadresse>
+            <Postnummer>1476</Postnummer>
+            <Poststed>RASTA</Poststed>
+            <Kommunenummer>3222</Kommunenummer>
+            <Kommune>LØRENSKOG</Kommune>
+            <Fylkesnummer>32</Fylkesnummer>
+            <Fylke>Akershus</Fylke>
+        </Adresse>
+        <Underavdelinger/>
+        <Status>Under behandling</Status>
+    </Renholdsvirksomhet>
+</ArrayOfRenholdsvirksomhet>

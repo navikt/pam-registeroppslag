@@ -14,4 +14,5 @@ val env = mutableMapOf(
     "ELECTOR_GET_URL" to "http://localhost/leader",
     "NO_LEADER_ELECTION" to "true",
     "BEMANNINGSFORETAKSREGISTER_URL" to "https://registerdata.arbeidstilsynet.no/Bemanning_register.json",
+    "RENHOLDSREGISTER_URL" to "https://registerdata.arbeidstilsynet.no/renhold.xml",
 )
