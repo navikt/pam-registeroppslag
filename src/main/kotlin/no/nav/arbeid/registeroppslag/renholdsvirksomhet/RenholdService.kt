@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 import java.net.URI
 import java.net.http.HttpClient
 
-data class RenholdService(
+class RenholdService(
     private val parser: RenholdParser,
     private val httpClient: HttpClient,
     private val valkey: ValkeyService,

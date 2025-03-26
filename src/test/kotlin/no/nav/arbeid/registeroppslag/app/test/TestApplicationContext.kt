@@ -3,6 +3,7 @@ package no.nav.arbeid.registeroppslag.app.test
 import io.mockk.mockk
 import no.nav.arbeid.registeroppslag.ApplicationContext
 import no.nav.arbeid.registeroppslag.app.test.TestRunningApplication.Companion.appCtx
+import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakController
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakParser
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakService
 import no.nav.arbeid.registeroppslag.renholdsvirksomhet.RenholdController
@@ -42,23 +43,27 @@ class TestApplicationContext(
 
     val bemanningsforetakParserMock = mockk<BemanningsforetakParser>()
     val bemanningsforetakServiceMock = mockk<BemanningsforetakService>()
-    override val bemanningsforetakService = super.bemanningsforetakService.copy(
-            parser = bemanningsforetakParserMock,
-            bemanningsforetakRegisterUrl = "http://localhost"
-        )
-    override val bemanningsforetakController = super.bemanningsforetakController.copy(
-            bemanningsforetakService = bemanningsforetakServiceMock
-        )
+    override val bemanningsforetakService = BemanningsforetakService(
+        parser = bemanningsforetakParserMock,
+        httpClient = httpClient,
+        valkey = valkey,
+        objectMapper = objectMapper,
+        metrikker = metrikker,
+        bemanningsforetakRegisterUrl = "http://localhost"
+    )
+    override val bemanningsforetakController = BemanningsforetakController(bemanningsforetakServiceMock)
 
     val renholdParserMock = mockk<RenholdParser>()
     val renholdServiceMock = mockk<RenholdService>()
-    override val renholdService = super.renholdService.copy(
+    override val renholdService = RenholdService(
         parser = renholdParserMock,
+        httpClient = httpClient,
+        valkey = valkey,
+        objectMapper = objectMapper,
+        metrikker = metrikker,
         renholdsregisterURL = "http://localhost"
     )
-    override val renholdController = super.renholdController.copy(
-        renholdService = renholdServiceMock
-    )
+    override val renholdController = RenholdController(renholdServiceMock)
 
     val mockOauth2Server = MockOAuth2Server().also { server ->
         server.start()

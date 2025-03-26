@@ -6,7 +6,7 @@ import io.javalin.http.HttpStatus
 import no.nav.arbeid.registeroppslag.Organisasjonsnummer
 import no.nav.arbeid.registeroppslag.sikkerhet.Rolle
 
-data class RenholdController(
+class RenholdController(
     private val renholdService: RenholdService,
 ) {
     fun setupRoutes(javalin: Javalin) {
