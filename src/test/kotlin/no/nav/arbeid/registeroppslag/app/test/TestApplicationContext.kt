@@ -3,8 +3,12 @@ package no.nav.arbeid.registeroppslag.app.test
 import io.mockk.mockk
 import no.nav.arbeid.registeroppslag.ApplicationContext
 import no.nav.arbeid.registeroppslag.app.test.TestRunningApplication.Companion.appCtx
+import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakController
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakParser
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakService
+import no.nav.arbeid.registeroppslag.renholdsvirksomhet.RenholdController
+import no.nav.arbeid.registeroppslag.renholdsvirksomhet.RenholdParser
+import no.nav.arbeid.registeroppslag.renholdsvirksomhet.RenholdService
 import no.nav.arbeid.registeroppslag.scheduler.Scheduler
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import org.slf4j.Logger
@@ -32,19 +36,34 @@ class TestApplicationContext(
 
     private val log: Logger = LoggerFactory.getLogger("LocalApplicationContext")
 
-    val bemanningsforetakParserMock = mockk<BemanningsforetakParser>()
-    val bemanningsforetakServiceMock = mockk<BemanningsforetakService>()
     override val scheduler: Scheduler = Scheduler {
         Scheduler.log.info("Kjører i testmodus, scheduler kjøres ikke")
         appCtx.scheduler.stop()
     }
-    override val bemanningsforetakService = super.bemanningsforetakService.copy(
-            parser = bemanningsforetakParserMock,
-            bemanningsforetakRegisterUrl = "http://localhost"
-        )
-    override val bemanningsforetakController = super.bemanningsforetakController.copy(
-            bemanningsforetakService = bemanningsforetakServiceMock
-        )
+
+    val bemanningsforetakParserMock = mockk<BemanningsforetakParser>()
+    val bemanningsforetakServiceMock = mockk<BemanningsforetakService>()
+    override val bemanningsforetakService = BemanningsforetakService(
+        parser = bemanningsforetakParserMock,
+        httpClient = httpClient,
+        valkey = valkey,
+        objectMapper = objectMapper,
+        metrikker = metrikker,
+        bemanningsforetakRegisterUrl = "http://localhost"
+    )
+    override val bemanningsforetakController = BemanningsforetakController(bemanningsforetakServiceMock)
+
+    val renholdParserMock = mockk<RenholdParser>()
+    val renholdServiceMock = mockk<RenholdService>()
+    override val renholdService = RenholdService(
+        parser = renholdParserMock,
+        httpClient = httpClient,
+        valkey = valkey,
+        objectMapper = objectMapper,
+        metrikker = metrikker,
+        renholdsregisterURL = "http://localhost"
+    )
+    override val renholdController = RenholdController(renholdServiceMock)
 
     val mockOauth2Server = MockOAuth2Server().also { server ->
         server.start()

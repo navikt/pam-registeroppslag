@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test
 class BemanningsforetakServiceTest : TestRunningApplication() {
     val registerdata = this::class.java.getResource("/bemanningsforetaksregister.json")!!.readBytes()
     val bftReg: List<BemanningsforetakDTO> = appCtx.bemanningsforetakParser.parseRegister(registerdata)
+    val registernavn = BemanningsforetakDTO.registernavn
     val valkey = appCtx.valkey
     val parserMock = appCtx.bemanningsforetakParserMock
     val bftService = appCtx.bemanningsforetakService
@@ -69,10 +70,10 @@ class BemanningsforetakServiceTest : TestRunningApplication() {
 
         assertThat(hovedenhetStatus).isNotEqualTo(underenhetStatus)
         assertThat(hovedenhetStatus).isEqualTo(
-            RegisterstatusDTO(hovedenhet.registernavn, hovedenhet.godkjenningsstatus, hovedenhet.registerstatus)
+            RegisterstatusDTO(registernavn, hovedenhet.godkjenningsstatus, hovedenhet.registerstatus)
         )
         assertThat(underenhetStatus).isEqualTo(
-            RegisterstatusDTO(underenhet.registernavn, underenhet.godkjenningsstatus, underenhet.registerstatus)
+            RegisterstatusDTO(registernavn, underenhet.godkjenningsstatus, underenhet.registerstatus)
         )
         assertThat(hovedenhetStatus.status).isEqualTo(Registerstatus.GODKJENT)
         assertThat(underenhetStatus.status).isEqualTo(Registerstatus.IKKE_GODKJENT)
@@ -85,7 +86,7 @@ class BemanningsforetakServiceTest : TestRunningApplication() {
         val bemanningsforetakStatus = bftService.hentBemanningsforetakStatus(forventet.organisasjonsnummer)
 
         assertThat(bemanningsforetakStatus).isEqualTo(
-            RegisterstatusDTO(forventet.registernavn, forventet.godkjenningsstatus, forventet.registerstatus)
+            RegisterstatusDTO(registernavn, forventet.godkjenningsstatus, forventet.registerstatus)
         )
         assertThat(bemanningsforetakStatus.status).isEqualTo(Registerstatus.IKKE_REGISTRERT)
     }

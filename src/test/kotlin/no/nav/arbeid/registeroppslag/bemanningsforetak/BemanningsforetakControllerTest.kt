@@ -81,7 +81,7 @@ class BemanningsforetakControllerTest : TestRunningApplication() {
 
     @Test
     fun `Skal hente status for bemanningsforetak`() {
-        val godkjentForetak = RegisterstatusDTO(foretak.registernavn, foretak.godkjenningsstatus, foretak.registerstatus)
+        val godkjentForetak = RegisterstatusDTO(BemanningsforetakDTO.registernavn, foretak.godkjenningsstatus, foretak.registerstatus)
         every { bftServiceMock.hentBemanningsforetakStatus(foretak.organisasjonsnummer) } returns godkjentForetak
 
         val request = HttpRequest.newBuilder()

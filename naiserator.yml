@@ -30,6 +30,9 @@ spec:
   secureLogs:
     enabled: true
   observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
     logging:
       destinations:
         - id: loki
@@ -69,4 +72,6 @@ spec:
       value: "true"
     - name: BEMANNINGSFORETAKSREGISTER_URL
       value: "https://data.arbeidstilsynet.no/bemanningsforetaksregisteret2/api/virksomheter"
+    - name: RENHOLDSREGISTER_URL
+      value: "https://registerdata.arbeidstilsynet.no/renhold.xml"
 

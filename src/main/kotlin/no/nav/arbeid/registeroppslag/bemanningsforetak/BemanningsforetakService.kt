@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 import java.net.URI
 import java.net.http.HttpClient
 
-data class BemanningsforetakService(
+class BemanningsforetakService(
     private val parser: BemanningsforetakParser,
     private val httpClient: HttpClient,
     private val valkey: ValkeyService,
@@ -20,10 +20,11 @@ data class BemanningsforetakService(
 ) {
     companion object {
         val log: Logger = LoggerFactory.getLogger(BemanningsforetakService::class.java)
+        val registernavn = BemanningsforetakDTO.registernavn
     }
 
     fun hentBemanningsforetak(organisasjonsnummer: Organisasjonsnummer): BemanningsforetakDTO {
-        val resonseValue = valkey.get("${organisasjonsnummer}:bemanningsforetaksregisteret")
+        val resonseValue = valkey.get("${organisasjonsnummer}:$registernavn")
         val bemanningsforetak = resonseValue?.let { objectMapper.readValue(it, BemanningsforetakDTO::class.java) }
             ?: BemanningsforetakDTO.ikkeRegistrert()
         log.info("Henter bemanningsforetak $bemanningsforetak")
@@ -32,11 +33,7 @@ data class BemanningsforetakService(
 
     fun hentBemanningsforetakStatus(organisasjonsnummer: Organisasjonsnummer): RegisterstatusDTO {
         val bemanningsforetak = hentBemanningsforetak(organisasjonsnummer)
-        return RegisterstatusDTO(
-            registernavn = bemanningsforetak.registernavn,
-            statusTekst = bemanningsforetak.godkjenningsstatus,
-            status = bemanningsforetak.registerstatus,
-        )
+        return bemanningsforetak.tilRegisterstatus()
     }
 
     fun lastNedOgLagreRegister() {
@@ -47,14 +44,14 @@ data class BemanningsforetakService(
 
     fun lagreRegister(register: List<BemanningsforetakDTO>) {
         register.forEach {
-            valkey.set("${it.organisasjonsnummer}:${it.registernavn}", objectMapper.writeValueAsString(it))
+            valkey.set("${it.organisasjonsnummer}:$registernavn", objectMapper.writeValueAsString(it))
         }
         log.info("Lagret ${register.size} resultater fra bemanningsforetaksregisteret")
     }
 
     fun lastNedRegister(): List<BemanningsforetakDTO> {
         val url = URI(bemanningsforetakRegisterUrl)
-        val registerData = parser.lastNedRegisterData("bemanningsforetaksregisteret", url, httpClient)
+        val registerData = parser.lastNedRegisterData(registernavn, url, httpClient)
         val bemanningsforetaksregisteret = parser.parseRegister(registerData)
         return bemanningsforetaksregisteret
     }
