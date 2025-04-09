@@ -74,4 +74,5 @@ spec:
       value: "https://data.arbeidstilsynet.no/bemanningsforetaksregisteret2/api/virksomheter"
     - name: RENHOLDSREGISTER_URL
       value: "https://registerdata.arbeidstilsynet.no/renhold.xml"
-
+    - name: BILPLEIEREGISTER_URL
+      value: "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/"
