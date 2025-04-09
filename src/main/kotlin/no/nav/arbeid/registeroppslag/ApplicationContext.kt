@@ -18,6 +18,9 @@ import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakController
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakParser
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakService
+import no.nav.arbeid.registeroppslag.bilpleievirksomhet.BilpleieController
+import no.nav.arbeid.registeroppslag.bilpleievirksomhet.BilpleieParser
+import no.nav.arbeid.registeroppslag.bilpleievirksomhet.BilpleieService
 import no.nav.arbeid.registeroppslag.config.TokenConfig
 import no.nav.arbeid.registeroppslag.metrikker.Metrikker
 import no.nav.arbeid.registeroppslag.nais.HealthService
@@ -83,6 +86,7 @@ open class ApplicationContext(envInn: Map<String, String>) {
                 require(leaderElector.erLeader()) { "Er ikke leader" }
                 bemanningsforetakService.lastNedOgLagreRegister()
                 renholdService.lastNedOgLagreRegister()
+                bilpleieService.lastNedOgLagreRegister()
                 return@Scheduler
             } catch (e: Exception) {
                 Scheduler.log.warn("Feil i scheduler: ${e.message}, forsøker igjen for ${it.inc()}. gang om 2 minutter", e)
@@ -118,4 +122,17 @@ open class ApplicationContext(envInn: Map<String, String>) {
         )
     }
     open val renholdController by lazy { RenholdController(renholdService) }
+
+    val bilpleieParser = BilpleieParser(objectMapper)
+    open val bilpleieService by lazy {
+        BilpleieService(
+            parser = bilpleieParser,
+            httpClient = httpClient,
+            valkey = valkey,
+            objectMapper = objectMapper,
+            metrikker = metrikker,
+            bilpleieregisterURL = env.getValue("BILPLEIEREGISTER_URL")
+        )
+    }
+    open val bilpleieController by lazy { BilpleieController(bilpleieService) }
 }

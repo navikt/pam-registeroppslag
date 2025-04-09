@@ -51,6 +51,7 @@ private fun ApplicationContext.setupAllRoutes(javalin: Javalin) {
     naisController.setupRoutes(javalin)
     bemanningsforetakController.setupRoutes(javalin)
     renholdController.setupRoutes(javalin)
+    bilpleieController.setupRoutes(javalin)
 }
 
 fun startJavalin(
