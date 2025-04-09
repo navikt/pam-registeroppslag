@@ -24,10 +24,21 @@ spec:
           expr: sum(changes(pam_registeroppslag_nedlasting_renholdsregister_total[1d])) < 1
           for: 1h
           labels:
-              severity: danger
-              namespace: teampam
-              teampam_alert_type: team_stilling_alert
-              alert_type: custom
+            severity: danger
+            namespace: teampam
+            teampam_alert_type: team_stilling_alert
+            alert_type: custom
           annotations:
-              summary: "Har ikke lastet ned enheter fra renholdsregisteret siste døgn"
-              action: "Sjekk i loggene om det er feil i nedlastingen (https://logs.adeo.no/app/r/s/uLp3a)"
+            summary: "Har ikke lastet ned enheter fra renholdsregisteret siste døgn"
+            action: "Sjekk i loggene om det er feil i nedlastingen (https://logs.adeo.no/app/r/s/uLp3a)"
+        - alert: Feil i nedlasting av bilpleieregisteret
+          expr: sum(changes(pam_registeroppslag_nedlasting_bilpleieregister_total[1d])) < 1
+          for: 1h
+          labels:
+            severity: danger
+            namespace: teampam
+            teampam_alert_type: team_stilling_alert
+            alert_type: custom
+          annotations:
+            summary: "Har ikke lastet ned enheter fra bilpleieregisteret siste døgn"
+            action: "Sjekk i loggene om det er feil i nedlastingen (https://logs.adeo.no/app/r/s/uLp3a)"
