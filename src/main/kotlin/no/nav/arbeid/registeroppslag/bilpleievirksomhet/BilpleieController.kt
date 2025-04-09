@@ -10,9 +10,9 @@ class BilpleieController(
     private val bilpleieService: BilpleieService,
 ) {
     fun setupRoutes(javalin: Javalin) {
-        javalin.get("/api/bilpleieregister/lastned", { lastNedOgLagreRegister(it) }, Rolle.UNPROTECTED)
-        javalin.get("/api/bilpleievirksomhet/{orgnr}", { hentBilpleievirksomhet(it) }, Rolle.UNPROTECTED)
-        javalin.get("/api/bilpleievirksomhet/{orgnr}/status", { hentBilpleievirksomhetStatus(it) }, Rolle.UNPROTECTED)
+        javalin.get("/api/bilpleieregister/lastned", { lastNedOgLagreRegister(it) }, Rolle.PÅLOGGET)
+        javalin.get("/api/bilpleievirksomhet/{orgnr}", { hentBilpleievirksomhet(it) }, Rolle.PÅLOGGET)
+        javalin.get("/api/bilpleievirksomhet/{orgnr}/status", { hentBilpleievirksomhetStatus(it) }, Rolle.PÅLOGGET)
     }
 
     fun hentBilpleievirksomhet(ctx: Context) {
