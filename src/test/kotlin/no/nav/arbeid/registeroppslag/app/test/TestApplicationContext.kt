@@ -6,6 +6,9 @@ import no.nav.arbeid.registeroppslag.app.test.TestRunningApplication.Companion.a
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakController
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakParser
 import no.nav.arbeid.registeroppslag.bemanningsforetak.BemanningsforetakService
+import no.nav.arbeid.registeroppslag.bilpleievirksomhet.BilpleieController
+import no.nav.arbeid.registeroppslag.bilpleievirksomhet.BilpleieParser
+import no.nav.arbeid.registeroppslag.bilpleievirksomhet.BilpleieService
 import no.nav.arbeid.registeroppslag.renholdsvirksomhet.RenholdController
 import no.nav.arbeid.registeroppslag.renholdsvirksomhet.RenholdParser
 import no.nav.arbeid.registeroppslag.renholdsvirksomhet.RenholdService
@@ -64,6 +67,18 @@ class TestApplicationContext(
         renholdsregisterURL = "http://localhost"
     )
     override val renholdController = RenholdController(renholdServiceMock)
+
+    val bilpleieParserMock = mockk<BilpleieParser>()
+    val bilpleieServiceMock = mockk<BilpleieService>()
+    override val bilpleieService = BilpleieService(
+        parser = bilpleieParserMock,
+        httpClient = httpClient,
+        valkey = valkey,
+        objectMapper = objectMapper,
+        metrikker = metrikker,
+        bilpleieregisterURL = "http://localhost"
+    )
+    override val bilpleieController = BilpleieController(bilpleieServiceMock)
 
     val mockOauth2Server = MockOAuth2Server().also { server ->
         server.start()

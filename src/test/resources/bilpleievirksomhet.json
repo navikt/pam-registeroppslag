@@ -1,0 +1,136 @@
+{
+  "organisasjonsnummer": "123456789",
+  "overordnetEnhet": null,
+  "links": null,
+  "navn": "BILPLEIESENTERET AS",
+  "antallAnsatte": null,
+  "registerstatusTekst": "Godkjent med ansatte",
+  "registerstatus": 4,
+  "godkjenningsstatus": "Godkjent",
+  "organisasjonsform": {
+    "kode": "AS",
+    "beskrivelse": "Aksjeselskap"
+  },
+  "naeringskoder": [
+    {
+      "kode": "45.200",
+      "beskrivelse": "Vedlikehold og reparasjon av motorvogner, unntatt motorsykler"
+    }
+  ],
+  "institusjonellSektorkode": {
+    "kode": "2100",
+    "beskrivelse": "Private aksjeselskaper mv."
+  },
+  "hjemmeside": null,
+  "postadresse": {
+    "gateadresse": [],
+    "postnummer": "",
+    "poststed": "",
+    "kommune": "",
+    "kommunenummer": "",
+    "fylke": "",
+    "fylkesnummer": "",
+    "land": "",
+    "landkode": ""
+  },
+  "forretningsadresse": {
+    "gateadresse": [
+      "Industriveien 2"
+    ],
+    "postnummer": "5020",
+    "poststed": "BERGEN",
+    "kommune": "BERGEN",
+    "kommunenummer": "4601",
+    "fylke": "Vestland",
+    "fylkesnummer": "56",
+    "land": "Norge",
+    "landkode": "NO"
+  },
+  "registreringsdatoEnhetsregisteret": "2025-04-09",
+  "sisteInnsendteAarsregnskap": "2024",
+  "registrertIMvaregisteret": true,
+  "registrertIForetaksregisteret": true,
+  "registrertIStiftelsesregisteret": false,
+  "registrertIFrivillighetsregisteret": false,
+  "konkurs": false,
+  "underAvvikling": false,
+  "underTvangsavviklingEllerTvangsopplosning": false,
+  "stiftelsesdato": "1970-01-01",
+  "oppstartsdato": null,
+  "datoEierskifte": null,
+  "nedleggelsesdato": null,
+  "maalform": "Samnorsk",
+  "underenheter": [
+    {
+      "organisasjonsnummer": "987654321",
+      "overordnetEnhet": "123456789",
+      "links": {
+        "overordnetEnhet": {
+          "href": "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/123456789"
+        },
+        "self": {
+          "href": "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/987654321"
+        }
+      },
+      "navn": "BILPLEIESENTERET AS - AVDELING 1",
+      "antallAnsatte": null,
+      "registerstatusTekst": "Godkjent med ansatte",
+      "registerstatus": 4,
+      "godkjenningsstatus": "Godkjent",
+      "organisasjonsform": {
+        "kode": "BEDR",
+        "beskrivelse": "Underenhet til næringsdrivende og offentlig forvaltning"
+      },
+      "naeringskoder": [
+        {
+          "kode": "45.200",
+          "beskrivelse": "Vedlikehold og reparasjon av motorvogner, unntatt motorsykler"
+        }
+      ],
+      "institusjonellSektorkode": {
+        "kode": "",
+        "beskrivelse": ""
+      },
+      "hjemmeside": null,
+      "postadresse": {
+        "gateadresse": [],
+        "postnummer": "",
+        "poststed": "",
+        "kommune": "",
+        "kommunenummer": "",
+        "fylke": "",
+        "fylkesnummer": "",
+        "land": "",
+        "landkode": ""
+      },
+      "forretningsadresse": {
+        "gateadresse": [
+          "Industriveien 2"
+        ],
+        "postnummer": "5020",
+        "poststed": "BERGEN",
+        "kommune": "BERGEN",
+        "kommunenummer": "4601",
+        "fylke": "Vestland",
+        "fylkesnummer": "56",
+        "land": "Norge",
+        "landkode": "NO"
+      },
+      "registreringsdatoEnhetsregisteret": "2025-04-09",
+      "sisteInnsendteAarsregnskap": null,
+      "registrertIMvaregisteret": false,
+      "registrertIForetaksregisteret": false,
+      "registrertIStiftelsesregisteret": false,
+      "registrertIFrivillighetsregisteret": false,
+      "konkurs": false,
+      "underAvvikling": false,
+      "underTvangsavviklingEllerTvangsopplosning": false,
+      "stiftelsesdato": null,
+      "oppstartsdato": null,
+      "datoEierskifte": null,
+      "nedleggelsesdato": null,
+      "maalform": null,
+      "underenheter": null
+    }
+  ]
+}
