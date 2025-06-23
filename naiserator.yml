@@ -67,6 +67,7 @@ spec:
       external:
         - host: "registerdata.arbeidstilsynet.no"
         - host: "data.arbeidstilsynet.no"
+        - host: "pkkvr-finn-godkjent-verksted-backend.atlas.vegvesen.no"
   env:
     - name: VALKEY_USE_TLS
       value: "true"
@@ -76,3 +77,5 @@ spec:
       value: "https://registerdata.arbeidstilsynet.no/renhold.xml"
     - name: BILPLEIEREGISTER_URL
       value: "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/"
+    - name: BILVERKSTED_URL
+      value: "https://pkkvr-finn-godkjent-verksted-backend.atlas.vegvesen.no/export-csv?fylkeId=&query=__ALL__&offset=0"
