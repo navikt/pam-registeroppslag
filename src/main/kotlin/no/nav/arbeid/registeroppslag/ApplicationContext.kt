@@ -131,7 +131,8 @@ open class ApplicationContext(envInn: Map<String, String>) {
             valkey = valkey,
             objectMapper = objectMapper,
             metrikker = metrikker,
-            bilpleieregisterURL = env.getValue("BILPLEIEREGISTER_URL")
+            bilpleieregisterURL = env.getValue("BILPLEIEREGISTER_URL"),
+            bilverkstedURL = env.getValue("BILVERKSTED_URL"),
         )
     }
     open val bilpleieController by lazy { BilpleieController(bilpleieService) }

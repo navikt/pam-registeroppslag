@@ -16,7 +16,7 @@ interface RegisterParser {
 
     fun lastNedRegisterData(registerNavn: String, registerUrl: URI, httpClient: HttpClient, headers: Map<String, String> = emptyMap()): ByteArray {
         val requestBuilder = HttpRequest.newBuilder(registerUrl)
-            .header("Accept", "application/json")
+            .header("Accept", "application/json, application/xml, text/xml, text/csv")
             .GET()
 
         if (headers.isNotEmpty())    {

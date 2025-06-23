@@ -76,7 +76,8 @@ class TestApplicationContext(
         valkey = valkey,
         objectMapper = objectMapper,
         metrikker = metrikker,
-        bilpleieregisterURL = "http://localhost"
+        bilpleieregisterURL = "http://localhost",
+        bilverkstedURL = "http://localhost",
     )
     override val bilpleieController = BilpleieController(bilpleieServiceMock)
 

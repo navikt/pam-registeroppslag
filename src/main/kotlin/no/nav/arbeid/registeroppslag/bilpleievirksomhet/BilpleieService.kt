@@ -17,6 +17,7 @@ class BilpleieService(
     private val objectMapper: ObjectMapper,
     private val metrikker: Metrikker,
     private val bilpleieregisterURL: String,
+    private val bilverkstedURL: String,
     ) {
     companion object {
         val log: Logger = LoggerFactory.getLogger(BilpleieService::class.java)
@@ -51,6 +52,11 @@ class BilpleieService(
         val headers = mapOf("Content-Version" to "1.2")
         val registerData = parser.lastNedRegisterData(registernavn, url, httpClient, headers)
         val bilpleieregisteret = parser.parseRegister(registerData)
-        return bilpleieregisteret
+
+        val bilverkstedURL = URI(bilverkstedURL)
+        val bilverkstedData = parser.lastNedRegisterData("bilverksted", bilverkstedURL, httpClient)
+        val bilverksted = parser.parseBilverksted(bilverkstedData)
+
+        return bilpleieregisteret + bilverksted
     }
 }

@@ -16,4 +16,5 @@ val env = mutableMapOf(
     "BEMANNINGSFORETAKSREGISTER_URL" to "https://registerdata.arbeidstilsynet.no/Bemanning_register.json",
     "RENHOLDSREGISTER_URL" to "https://registerdata.arbeidstilsynet.no/renhold.xml",
     "BILPLEIEREGISTER_URL" to "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/",
+    "BILVERKSTED_URL" to "https://pkkvr-finn-godkjent-verksted-backend.atlas.vegvesen.no/export-csv?fylkeId=&query=__ALL__&offset=0"
 )
