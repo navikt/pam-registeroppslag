@@ -1,0 +1,281 @@
+{
+  "metadata": {
+    "versjon": "1.0",
+    "datoTidGenerert": "2025-06-24T09:15:44.0000000Z"
+  },
+  "registernavn": "bilpleieregisteret",
+  "data": [
+    {
+      "organisasjonsnummer": "222222222",
+      "overordnetEnhet": null,
+      "links": null,
+      "navn": "BILPLEIESENTERET AS",
+      "antallAnsatte": 10,
+      "registerstatusTekst": "Godkjent med ansatte",
+      "registerstatus": 4,
+      "godkjenningsstatus": "Godkjent",
+      "organisasjonsform": {
+        "kode": "AS",
+        "beskrivelse": "Aksjeselskap"
+      },
+      "naeringskoder": [
+        {
+          "kode": "45.200",
+          "beskrivelse": "Vedlikehold og reparasjon av motorvogner, unntatt motorsykler"
+        }
+      ],
+      "institusjonellSektorkode": {
+        "kode": "2100",
+        "beskrivelse": "Private aksjeselskaper mv."
+      },
+      "hjemmeside": null,
+      "postadresse": {
+        "gateadresse": [],
+        "postnummer": "",
+        "poststed": "",
+        "kommune": "",
+        "kommunenummer": "",
+        "fylke": "",
+        "fylkesnummer": "",
+        "land": "",
+        "landkode": ""
+      },
+      "forretningsadresse": {
+        "gateadresse": [
+          "Oslo Gate 8"
+        ],
+        "postnummer": "0000",
+        "poststed": "OSLO",
+        "kommune": "OSLO",
+        "kommunenummer": "0301",
+        "fylke": "Oslo",
+        "fylkesnummer": "03",
+        "land": "Norge",
+        "landkode": "NO"
+      },
+      "registreringsdatoEnhetsregisteret": "2020-10-20",
+      "sisteInnsendteAarsregnskap": "2024",
+      "registrertIMvaregisteret": true,
+      "registrertIForetaksregisteret": true,
+      "registrertIStiftelsesregisteret": false,
+      "registrertIFrivillighetsregisteret": false,
+      "konkurs": false,
+      "underAvvikling": false,
+      "underTvangsavviklingEllerTvangsopplosning": false,
+      "stiftelsesdato": "2020-10-14",
+      "oppstartsdato": null,
+      "datoEierskifte": null,
+      "nedleggelsesdato": null,
+      "maalform": "Bokmål",
+      "underenheter": [
+        {
+          "organisasjonsnummer": "333333333",
+          "overordnetEnhet": "222222222",
+          "links": {
+            "overordnetEnhet": {
+              "href": "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/222222222"
+            },
+            "self": {
+              "href": "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/333333333"
+            }
+          },
+          "navn": "BILPLEIESENTERET AS",
+          "antallAnsatte": 6,
+          "registerstatusTekst": "Godkjent med ansatte",
+          "registerstatus": 4,
+          "godkjenningsstatus": "Godkjent",
+          "organisasjonsform": {
+            "kode": "BEDR",
+            "beskrivelse": "Underenhet til næringsdrivende og offentlig forvaltning"
+          },
+          "naeringskoder": [
+            {
+              "kode": "45.200",
+              "beskrivelse": "Vedlikehold og reparasjon av motorvogner, unntatt motorsykler"
+            }
+          ],
+          "institusjonellSektorkode": {
+            "kode": "",
+            "beskrivelse": ""
+          },
+          "hjemmeside": null,
+          "postadresse": {
+            "gateadresse": [],
+            "postnummer": "",
+            "poststed": "",
+            "kommune": "",
+            "kommunenummer": "",
+            "fylke": "",
+            "fylkesnummer": "",
+            "land": "",
+            "landkode": ""
+          },
+          "forretningsadresse": {
+            "gateadresse": [
+              "Oslo Gate 8"
+            ],
+            "postnummer": "0000",
+            "poststed": "OSLO",
+            "kommune": "OSLO",
+            "kommunenummer": "0301",
+            "fylke": "Oslo",
+            "fylkesnummer": "03",
+            "land": "Norge",
+            "landkode": "NO"
+          },
+          "registreringsdatoEnhetsregisteret": "2020-10-20",
+          "sisteInnsendteAarsregnskap": "2024",
+          "registrertIMvaregisteret": true,
+          "registrertIForetaksregisteret": true,
+          "registrertIStiftelsesregisteret": false,
+          "registrertIFrivillighetsregisteret": false,
+          "konkurs": false,
+          "underAvvikling": false,
+          "underTvangsavviklingEllerTvangsopplosning": false,
+          "stiftelsesdato": "2020-10-14",
+          "oppstartsdato": null,
+          "datoEierskifte": null,
+          "nedleggelsesdato": null,
+          "maalform": null,
+          "underenheter": null
+        }
+      ]
+    },
+    {
+      "organisasjonsnummer": "555555555",
+      "overordnetEnhet": null,
+      "links": null,
+      "navn": "BILPLEIE AS",
+      "antallAnsatte": null,
+      "registerstatusTekst": "Søknad under behandling",
+      "registerstatus": 1,
+      "godkjenningsstatus": "Godkjent",
+      "organisasjonsform": {
+        "kode": "AS",
+        "beskrivelse": "Aksjeselskap"
+      },
+      "naeringskoder": [
+        {
+          "kode": "45.200",
+          "beskrivelse": "Vedlikehold og reparasjon av motorvogner, unntatt motorsykler"
+        }
+      ],
+      "institusjonellSektorkode": {
+        "kode": "2100",
+        "beskrivelse": "Private aksjeselskaper mv."
+      },
+      "hjemmeside": null,
+      "postadresse": {
+        "gateadresse": [],
+        "postnummer": "",
+        "poststed": "",
+        "kommune": "",
+        "kommunenummer": "",
+        "fylke": "",
+        "fylkesnummer": "",
+        "land": "",
+        "landkode": ""
+      },
+      "forretningsadresse": {
+        "gateadresse": [
+          "Hovedgata 41"
+        ],
+        "postnummer": "2323",
+        "poststed": "HAMAR",
+        "kommune": "HAMAR",
+        "kommunenummer": "3403",
+        "fylke": "Innlandet",
+        "fylkesnummer": "34",
+        "land": "Norge",
+        "landkode": "NO"
+      },
+      "registreringsdatoEnhetsregisteret": "2025-06-05",
+      "sisteInnsendteAarsregnskap": null,
+      "registrertIMvaregisteret": false,
+      "registrertIForetaksregisteret": true,
+      "registrertIStiftelsesregisteret": false,
+      "registrertIFrivillighetsregisteret": false,
+      "konkurs": false,
+      "underAvvikling": false,
+      "underTvangsavviklingEllerTvangsopplosning": false,
+      "stiftelsesdato": "2025-05-05",
+      "oppstartsdato": null,
+      "datoEierskifte": null,
+      "nedleggelsesdato": null,
+      "maalform": "Bokmål",
+      "underenheter": [
+        {
+          "organisasjonsnummer": "666666666",
+          "overordnetEnhet": "555555555",
+          "links": {
+            "overordnetEnhet": {
+              "href": "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/555555555"
+            },
+            "self": {
+              "href": "https://data.arbeidstilsynet.no/bilpleieregisteret/api/virksomheter/666666666"
+            }
+          },
+          "navn": "BILPLEIE AS",
+          "antallAnsatte": null,
+          "registerstatusTekst": "Søknad under behandling",
+          "registerstatus": 1,
+          "godkjenningsstatus": "Godkjent",
+          "organisasjonsform": {
+            "kode": "BEDR",
+            "beskrivelse": "Underenhet til næringsdrivende og offentlig forvaltning"
+          },
+          "naeringskoder": [
+            {
+              "kode": "45.200",
+              "beskrivelse": "Vedlikehold og reparasjon av motorvogner, unntatt motorsykler"
+            }
+          ],
+          "institusjonellSektorkode": {
+            "kode": "",
+            "beskrivelse": ""
+          },
+          "hjemmeside": null,
+          "postadresse": {
+            "gateadresse": [],
+            "postnummer": "",
+            "poststed": "",
+            "kommune": "",
+            "kommunenummer": "",
+            "fylke": "",
+            "fylkesnummer": "",
+            "land": "",
+            "landkode": ""
+          },
+          "forretningsadresse": {
+            "gateadresse": [
+              "Hovedgata 41"
+            ],
+            "postnummer": "2323",
+            "poststed": "HAMAR",
+            "kommune": "HAMAR",
+            "kommunenummer": "3403",
+            "fylke": "Innlandet",
+            "fylkesnummer": "34",
+            "land": "Norge",
+            "landkode": "NO"
+          },
+          "registreringsdatoEnhetsregisteret": "2025-06-11",
+          "sisteInnsendteAarsregnskap": null,
+          "registrertIMvaregisteret": false,
+          "registrertIForetaksregisteret": false,
+          "registrertIStiftelsesregisteret": false,
+          "registrertIFrivillighetsregisteret": false,
+          "konkurs": false,
+          "underAvvikling": false,
+          "underTvangsavviklingEllerTvangsopplosning": false,
+          "stiftelsesdato": null,
+          "oppstartsdato": null,
+          "datoEierskifte": null,
+          "nedleggelsesdato": null,
+          "maalform": null,
+          "underenheter": null
+        }
+      ]
+    }
+  ]
+}
