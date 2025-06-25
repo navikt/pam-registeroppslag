@@ -2,7 +2,6 @@ package no.nav.arbeid.registeroppslag.bilpleievirksomhet
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.opencsv.CSVParserBuilder
-import com.opencsv.CSVReaderHeaderAware
 import com.opencsv.CSVReaderHeaderAwareBuilder
 import no.nav.arbeid.registeroppslag.Organisasjonsnummer
 import no.nav.arbeid.registeroppslag.RegisterParser
