@@ -1,6 +1,6 @@
 {
   "ingress": ["https://pam-registeroppslag.intern.dev.nav.no/"],
   "min_replicas": 1,
-  "max_replicas": 4,
+  "max_replicas": 1,
   "azure_ad_tenant": "trygdeetaten.no"
 }
