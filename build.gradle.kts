@@ -61,7 +61,7 @@ dependencies {
     implementation("org.quartz-scheduler:quartz:2.5.0")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.assertj:assertj-core:3.27.3")
+    testImplementation("org.assertj:assertj-core:3.27.7")
     testImplementation("io.mockk:mockk:1.13.17")
     testImplementation("no.nav.security:mock-oauth2-server:2.1.9")
 
