@@ -27,14 +27,14 @@ tasks.withType<ShadowJar> {
     mergeServiceFiles()
 }
 
-val jacksonVersion = "2.18.2"
+val jacksonVersion = "2.22.3"
 val javalinVersion = "7.2.3"
-val micrometerVersion = "1.14.4"
-val tokenSupportVersion = "5.0.17"
-val testContainersVersion = "1.20.5"
+val micrometerVersion = "1.17.1"
+val tokenSupportVersion = "5.0.30"
+val testContainersVersion = "2.0.5"
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("io.javalin:javalin:$javalinVersion")
     implementation("io.javalin:javalin-micrometer:$javalinVersion")
     implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.31.1")
@@ -47,24 +47,24 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion")
 
-    implementation("com.opencsv:opencsv:5.11.1")
+    implementation("com.opencsv:opencsv:5.12.0")
 
     implementation("no.nav.security:token-validation-core:$tokenSupportVersion")
     implementation("no.nav.security:token-client-core:$tokenSupportVersion")
 
-    implementation("ch.qos.logback:logback-classic:1.5.18")
-    implementation("net.logstash.logback:logstash-logback-encoder:8.0")
+    implementation("ch.qos.logback:logback-classic:1.6.4")
+    implementation("net.logstash.logback:logstash-logback-encoder:9.0")
     implementation("com.papertrailapp:logback-syslog4j:1.0.0")
-    implementation("org.codehaus.janino:janino:3.1.11")
-    implementation("com.auth0:java-jwt:4.4.0")
+    implementation("org.codehaus.janino:janino:3.1.12")
+    implementation("com.auth0:java-jwt:4.6.1")
 
-    implementation("io.valkey:valkey-java:5.3.0")
-    implementation("org.quartz-scheduler:quartz:2.5.0")
+    implementation("io.valkey:valkey-java:5.5.0")
+    implementation("org.quartz-scheduler:quartz:2.5.2")
 
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.27.7")
-    testImplementation("io.mockk:mockk:1.13.17")
-    testImplementation("no.nav.security:mock-oauth2-server:2.1.9")
+    testImplementation("io.mockk:mockk:1.14.11")
+    testImplementation("no.nav.security:mock-oauth2-server:6.0.3")
 
     testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
 }
