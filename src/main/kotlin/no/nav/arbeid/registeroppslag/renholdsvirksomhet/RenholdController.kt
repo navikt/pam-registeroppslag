@@ -1,6 +1,6 @@
 package no.nav.arbeid.registeroppslag.renholdsvirksomhet
 
-import io.javalin.Javalin
+import io.javalin.config.JavalinConfig
 import io.javalin.http.Context
 import io.javalin.http.HttpStatus
 import no.nav.arbeid.registeroppslag.Organisasjonsnummer
@@ -9,10 +9,10 @@ import no.nav.arbeid.registeroppslag.sikkerhet.Rolle
 class RenholdController(
     private val renholdService: RenholdService,
 ) {
-    fun setupRoutes(javalin: Javalin) {
-        javalin.get("/api/renholdsvirksomhet/lastned", { lastNedOgLagreRegister(it) }, Rolle.PÅLOGGET)
-        javalin.get("/api/renholdsvirksomhet/{orgnr}", { hentRenholdsvirksomhet(it) }, Rolle.PÅLOGGET)
-        javalin.get("/api/renholdsvirksomhet/{orgnr}/status", { hentRenholdsvirksomhetStatus(it) }, Rolle.PÅLOGGET)
+    fun setupRoutes(config: JavalinConfig) {
+        config.routes.get("/api/renholdsvirksomhet/lastned", { lastNedOgLagreRegister(it) }, Rolle.PÅLOGGET)
+        config.routes.get("/api/renholdsvirksomhet/{orgnr}", { hentRenholdsvirksomhet(it) }, Rolle.PÅLOGGET)
+        config.routes.get("/api/renholdsvirksomhet/{orgnr}/status", { hentRenholdsvirksomhetStatus(it) }, Rolle.PÅLOGGET)
     }
 
     fun hentRenholdsvirksomhet(ctx: Context) {

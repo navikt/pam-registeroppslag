@@ -1,10 +1,13 @@
 package no.nav.arbeid.registeroppslag
 
 import io.javalin.Javalin
+import io.javalin.config.JavalinConfig
 import io.javalin.http.Context
 import io.javalin.json.JavalinJackson
 import io.javalin.micrometer.MicrometerPlugin
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
+import io.opentelemetry.instrumentation.api.semconv.http.HttpServerRoute
+import io.opentelemetry.instrumentation.api.semconv.http.HttpServerRouteSource
 import java.util.*
 import net.logstash.logback.argument.StructuredArguments.kv
 import no.nav.arbeid.registeroppslag.config.hentKonsumentId
@@ -37,28 +40,28 @@ fun ApplicationContext.startApp(): Javalin {
         port = 8080,
         jsonMapper = JavalinJackson(objectMapper),
         meterRegistry = prometheusRegistry,
-        accessManager = accessManager
+        accessManager = accessManager,
+        setupRoutes = { config -> setupAllRoutes(config) },
     )
-
-    setupAllRoutes(javalin)
 
     scheduler.start()
 
     return javalin
 }
 
-private fun ApplicationContext.setupAllRoutes(javalin: Javalin) {
-    naisController.setupRoutes(javalin)
-    bemanningsforetakController.setupRoutes(javalin)
-    renholdController.setupRoutes(javalin)
-    bilpleieController.setupRoutes(javalin)
+private fun ApplicationContext.setupAllRoutes(config: JavalinConfig) {
+    naisController.setupRoutes(config)
+    bemanningsforetakController.setupRoutes(config)
+    renholdController.setupRoutes(config)
+    bilpleieController.setupRoutes(config)
 }
 
 fun startJavalin(
     port: Int = 8080,
     jsonMapper: JavalinJackson,
     meterRegistry: PrometheusMeterRegistry,
-    accessManager: JavalinAccessManager
+    accessManager: JavalinAccessManager,
+    setupRoutes: (JavalinConfig) -> Unit,
 ): Javalin {
     val requestLogger = LoggerFactory.getLogger("access")
     val log = LoggerFactory.getLogger("no.nav.arbeid.registeroppslag")
@@ -66,49 +69,65 @@ fun startJavalin(
         micrometerConfig.registry = meterRegistry
     }
 
-    return Javalin.create {
-        it.router.ignoreTrailingSlashes = true
-        it.router.treatMultipleSlashesAsSingleSlash = true
-        it.requestLogger.http { ctx, ms ->
+    return Javalin.create { config ->
+        config.router.ignoreTrailingSlashes = true
+        config.router.treatMultipleSlashesAsSingleSlash = true
+        config.requestLogger.http { ctx, ms ->
             if (!(ctx.path().endsWith("/internal/isReady") ||
                         ctx.path().endsWith("/internal/isAlive") ||
                         ctx.path().endsWith("/internal/prometheus"))
             )
                 logRequest(ctx, ms, requestLogger)
         }
-        it.http.defaultContentType = "application/json"
-        it.jsonMapper(jsonMapper)
-        it.registerPlugin(micrometerPlugin)
+        config.http.defaultContentType = "application/json"
+        config.jsonMapper(jsonMapper)
+        config.registerPlugin(micrometerPlugin)
 
-    }.beforeMatched { ctx ->
-        if (ctx.routeRoles().isEmpty()) {
-            return@beforeMatched
+        setupRoutes(config)
+
+        config.routes.beforeMatched { ctx ->
+            ctx.endpoints().matchedHttpEndpoint()?.let { endepunkt ->
+                HttpServerRoute.update(
+                    io.opentelemetry.context.Context.current(),
+                    HttpServerRouteSource.NESTED_CONTROLLER,
+                    endepunkt.path
+                )
+            }
+            if (ctx.routeRoles().isEmpty()) {
+                return@beforeMatched
+            }
+            accessManager.manage(ctx, ctx.routeRoles())
         }
-        accessManager.manage(ctx, ctx.routeRoles())
-
-    }.before { ctx ->
-        val callId = ctx.header("Nav-Call-Id") ?: ctx.header("Nav-CallId") ?: UUID.randomUUID().toString()
-        ctx.attribute("TraceId", callId)
-        MDC.put("TraceId", callId)
-    }.after {
-        MDC.remove("TraceId")
-        MDC.remove("U")
-        MDC.remove(KONSUMENT_ID_MDC_KEY)
-    }.exception(NotFoundException::class.java) { e, ctx ->
-        log.warn("NotFoundException: ${e.message}", e)
-        ctx.status(404).result(e.message ?: "")
-    }.exception(ForbiddenException::class.java) { e, ctx ->
-        log.warn("ForbiddenException: ${e.message}", e)
-        ctx.status(403).result(e.message ?: "")
-    }.exception(UnauthorizedException::class.java) { e, ctx ->
-        log.warn("UnauthorizedException: ${e.message}", e)
-        ctx.status(401).result(e.message ?: "")
-    }.exception(IllegalArgumentException::class.java) { e, ctx ->
-        log.warn("IllegalArgumentException: ${e.message}", e)
-        ctx.status(400).result(e.message ?: "")
-    }.exception(Exception::class.java) { e, ctx ->
-        log.error("Exception: ${e.message}", e)
-        ctx.status(500).result(e.message ?: "")
+        config.routes.before { ctx ->
+            val callId = ctx.header("Nav-Call-Id") ?: ctx.header("Nav-CallId") ?: UUID.randomUUID().toString()
+            ctx.attribute("TraceId", callId)
+            MDC.put("TraceId", callId)
+        }
+        config.routes.after {
+            MDC.remove("TraceId")
+            MDC.remove("U")
+            MDC.remove(KONSUMENT_ID_MDC_KEY)
+        }
+        config.routes.exception(NotFoundException::class.java) { e, ctx ->
+            log.warn("NotFoundException: ${e.message}", e)
+            ctx.status(404).result(e.message ?: "")
+        }
+        config.routes.exception(ForbiddenException::class.java) { e, ctx ->
+            log.warn("ForbiddenException: ${e.message}", e)
+            ctx.status(403).result(e.message ?: "")
+        }
+        config.routes.exception(UnauthorizedException::class.java) { e, ctx ->
+            log.warn("UnauthorizedException: ${e.message}", e)
+            ctx.status(401).result(e.message ?: "")
+        }
+        config.routes.exception(IllegalArgumentException::class.java) { e, ctx ->
+            log.warn("IllegalArgumentException: ${e.message}", e)
+            ctx.status(400).result(e.message ?: "")
+        }
+        config.routes.exception(Exception::class.java) { e, ctx ->
+            log.error("Exception: ${e.message}", e)
+            ctx.status(500).result(e.message ?: "")
+        }
     }.start(port)
 }
 

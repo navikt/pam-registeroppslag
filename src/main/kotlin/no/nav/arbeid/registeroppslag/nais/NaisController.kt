@@ -1,6 +1,6 @@
 package no.nav.arbeid.registeroppslag.nais
 
-import io.javalin.Javalin
+import io.javalin.config.JavalinConfig
 import io.javalin.http.HttpStatus
 import io.micrometer.prometheusmetrics.PrometheusMeterRegistry
 import io.prometheus.client.exporter.common.TextFormat
@@ -12,19 +12,19 @@ class NaisController(
     private val prometheusMeterRegistry: PrometheusMeterRegistry,
     private val leaderElector: LeaderElector,
 ) {
-    fun setupRoutes(javalin: Javalin) {
-        javalin.get("/internal/isReady", { it.status(200) }, Rolle.UNPROTECTED)
-        javalin.get(
+    fun setupRoutes(config: JavalinConfig) {
+        config.routes.get("/internal/isReady", { it.status(200) }, Rolle.UNPROTECTED)
+        config.routes.get(
             "/internal/isAlive",
             { if (healthService.isHealthy()) it.status(HttpStatus.OK) else it.status(HttpStatus.SERVICE_UNAVAILABLE) },
             Rolle.UNPROTECTED
         )
-        javalin.get(
+        config.routes.get(
             "/internal/prometheus",
             { it.contentType(TextFormat.CONTENT_TYPE_004).result(prometheusMeterRegistry.scrape()) },
             Rolle.UNPROTECTED
         )
-        javalin.get("/internal/leader", { it.json(leaderElector.erLeader()) }, Rolle.UNPROTECTED)
+        config.routes.get("/internal/leader", { it.json(leaderElector.erLeader()) }, Rolle.UNPROTECTED)
     }
 }
 
