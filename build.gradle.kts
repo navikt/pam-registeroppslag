@@ -1,8 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    kotlin("jvm") version "2.0.21"
-    id("com.gradleup.shadow") version "8.3.2"
+    kotlin("jvm") version "2.4.20"
+    id("com.gradleup.shadow") version "9.6.1"
     id("com.github.davidmc24.gradle.plugin.avro") version "1.9.1"
     application
 }
@@ -28,7 +28,7 @@ tasks.withType<ShadowJar> {
 }
 
 val jacksonVersion = "2.18.2"
-val javalinVersion = "6.4.0"
+val javalinVersion = "7.2.3"
 val micrometerVersion = "1.14.4"
 val tokenSupportVersion = "5.0.17"
 val testContainersVersion = "1.20.5"
@@ -37,6 +37,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
     implementation("io.javalin:javalin:$javalinVersion")
     implementation("io.javalin:javalin-micrometer:$javalinVersion")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.31.1")
     implementation("org.eclipse.jetty:jetty-util")
     implementation("io.micrometer:micrometer-core:$micrometerVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
@@ -66,4 +67,8 @@ dependencies {
     testImplementation("no.nav.security:mock-oauth2-server:2.1.9")
 
     testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
+}
+
+kotlin {
+    jvmToolchain(25)
 }
