@@ -27,7 +27,7 @@ tasks.withType<ShadowJar> {
     mergeServiceFiles()
 }
 
-val jacksonVersion = "2.22.3"
+val jacksonVersion = "2.22.4"
 val javalinVersion = "7.2.3"
 val micrometerVersion = "1.17.1"
 val tokenSupportVersion = "5.0.30"
@@ -56,7 +56,7 @@ dependencies {
     implementation("net.logstash.logback:logstash-logback-encoder:9.0")
     implementation("com.papertrailapp:logback-syslog4j:1.0.0")
     implementation("org.codehaus.janino:janino:3.1.12")
-    implementation("com.auth0:java-jwt:4.6.1")
+    implementation("com.auth0:java-jwt:4.6.2")
 
     implementation("io.valkey:valkey-java:5.5.0")
     implementation("org.quartz-scheduler:quartz:2.5.2")
@@ -64,7 +64,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.27.7")
     testImplementation("io.mockk:mockk:1.14.11")
-    testImplementation("no.nav.security:mock-oauth2-server:6.0.5")
+    testImplementation("no.nav.security:mock-oauth2-server:6.1.2")
 
     testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
 }
