@@ -28,8 +28,8 @@ tasks.withType<ShadowJar> {
 }
 
 val jacksonVersion = "2.22.4"
-val javalinVersion = "7.2.3"
-val micrometerVersion = "1.17.1"
+val javalinVersion = "7.2.4"
+val micrometerVersion = "1.17.2"
 val tokenSupportVersion = "5.0.30"
 val testContainersVersion = "2.0.5"
 dependencies {
@@ -37,7 +37,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("io.javalin:javalin:$javalinVersion")
     implementation("io.javalin:javalin-micrometer:$javalinVersion")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.32.0")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.33.0")
     implementation("org.eclipse.jetty:jetty-util")
     implementation("io.micrometer:micrometer-core:$micrometerVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
@@ -52,7 +52,7 @@ dependencies {
     implementation("no.nav.security:token-validation-core:$tokenSupportVersion")
     implementation("no.nav.security:token-client-core:$tokenSupportVersion")
 
-    implementation("ch.qos.logback:logback-classic:1.6.5")
+    implementation("ch.qos.logback:logback-classic:1.6.6")
     implementation("net.logstash.logback:logstash-logback-encoder:9.0")
     implementation("com.papertrailapp:logback-syslog4j:1.0.0")
     implementation("org.codehaus.janino:janino:3.1.12")
@@ -64,7 +64,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.27.7")
     testImplementation("io.mockk:mockk:1.14.11")
-    testImplementation("no.nav.security:mock-oauth2-server:6.1.2")
+    testImplementation("no.nav.security:mock-oauth2-server:6.1.3")
 
     testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
 }
