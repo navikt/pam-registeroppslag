@@ -37,7 +37,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("io.javalin:javalin:$javalinVersion")
     implementation("io.javalin:javalin-micrometer:$javalinVersion")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.33.0")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.33.1")
     implementation("org.eclipse.jetty:jetty-util")
     implementation("io.micrometer:micrometer-core:$micrometerVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
@@ -64,7 +64,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.27.7")
     testImplementation("io.mockk:mockk:1.14.11")
-    testImplementation("no.nav.security:mock-oauth2-server:6.1.3")
+    testImplementation("no.nav.security:mock-oauth2-server:6.1.4")
 
     testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
 }
