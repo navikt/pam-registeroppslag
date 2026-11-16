@@ -27,7 +27,7 @@ tasks.withType<ShadowJar> {
     mergeServiceFiles()
 }
 
-val jacksonVersion = "2.22.4"
+val jacksonVersion = "2.23.0"
 val javalinVersion = "7.2.4"
 val micrometerVersion = "1.17.2"
 val tokenSupportVersion = "5.0.30"
@@ -63,7 +63,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.27.7")
-    testImplementation("io.mockk:mockk:1.14.11")
+    testImplementation("io.mockk:mockk:1.14.12")
     testImplementation("no.nav.security:mock-oauth2-server:6.1.4")
 
     testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
