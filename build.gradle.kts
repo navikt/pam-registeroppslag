@@ -52,7 +52,7 @@ dependencies {
     implementation("no.nav.security:token-validation-core:$tokenSupportVersion")
     implementation("no.nav.security:token-client-core:$tokenSupportVersion")
 
-    implementation("ch.qos.logback:logback-classic:1.6.6")
+    implementation("ch.qos.logback:logback-classic:1.6.7")
     implementation("net.logstash.logback:logstash-logback-encoder:9.0")
     implementation("com.papertrailapp:logback-syslog4j:1.0.0")
     implementation("org.codehaus.janino:janino:3.1.12")
@@ -64,7 +64,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.27.7")
     testImplementation("io.mockk:mockk:1.14.12")
-    testImplementation("no.nav.security:mock-oauth2-server:6.1.4")
+    testImplementation("no.nav.security:mock-oauth2-server:7.0.0")
 
     testImplementation("org.testcontainers:testcontainers:$testContainersVersion")
 }
